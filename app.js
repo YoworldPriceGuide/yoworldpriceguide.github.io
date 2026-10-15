@@ -4,6 +4,11 @@ const SHOP_ICON = `<svg class="shop-icon" viewBox="0 0 24 24" fill="none" stroke
 const TAG_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><circle cx="7" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg>`;
 const CART_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`;
 
+// Sends a Google Analytics event. Does nothing if the Google tag hasn't loaded.
+function trackEvent(name, params) {
+  if (typeof gtag === "function") gtag("event", name, params);
+}
+
 function storeBadge(activeInStore) {
   return activeInStore ? `<span class="shop-badge" data-tooltip="Available in the YoWorld store">${SHOP_ICON}</span>` : "";
 }
@@ -368,7 +373,10 @@ async function submitPriceLog(itemId, price, priceDate) {
       },
       body: JSON.stringify({ p_user_id: userId, p_item_id: Number(itemId), p_price: Math.round(price), p_price_date: priceDate ?? null })
     });
-    if (res.ok) return { ok: true };
+    if (res.ok) {
+      trackEvent("price_log_submitted", { item_id: String(itemId) });
+      return { ok: true };
+    }
     const body = await res.text();
     if (body.includes("already submitted a price for this item today")) {
       return { ok: false, alreadySubmitted: true };
@@ -390,6 +398,7 @@ async function requestPriceCheck(itemId, itemName) {
       },
       body: JSON.stringify({ p_item_id: Number(itemId), p_item_name: itemName ?? null })
     });
+    if (res.ok) trackEvent("price_check_requested", { item_id: String(itemId) });
     return res.ok;
   } catch (e) {
     console.error("[Supabase] request_price_check exception:", e);
@@ -423,6 +432,9 @@ async function handleItemToggle(itemId, isBuy) {
     ? (currentState === "buy" ? "none" : "buy")
     : (currentState === "sell" ? "none" : "sell");
   await setItemState(itemId, newState);
+  if (newState !== "none") {
+    trackEvent(newState === "buy" ? "add_to_buy_list" : "add_to_sell_list", { item_id: String(itemId) });
+  }
   const resolvedItem = searchResultsMap[itemId]
     ?? loadWatchlist().find(i => i.id === itemId)
     ?? (() => { const h = loadPriceHistory()[itemId]; return h ? { id: itemId, name: h.name } : null; })();
@@ -1671,6 +1683,7 @@ async function renderListExportCanvas(items, listType) {
 
 async function exportListAsPNG(items, getFilename, btn, selection, listType) {
   if (!items.length) return;
+  trackEvent("export_list_image", { list_type: listType, item_count: items.length });
 
   const gridMax = loadExportItemCount().count;
   const chunks = [];
@@ -1754,6 +1767,7 @@ async function renderFacebookExportCanvas(items, listType) {
 
 async function exportListAsFacebookPNG(items, getFilename, btn, selection, listType) {
   if (!items.length) return;
+  trackEvent("export_facebook_image", { list_type: listType, item_count: items.length });
 
   const fbSettings = loadFBPostItemCount();
   const gridMax = fbSettings.count;
@@ -2158,6 +2172,7 @@ async function doSearch(query, page = 1) {
     const { items, total } = await fetchSearchPage(query, page);
     if (total !== null) searchTotalItems = total;
     totalPages = Math.max(1, Math.ceil(searchTotalItems / SEARCH_PAGE_SIZE));
+    if (page === 1) trackEvent("search", { search_term: query, result_count: items.length });
 
     if (!items.length) {
       resultsEl.innerHTML = `<div class="empty">No items found for "${query}".</div>`;
@@ -2804,6 +2819,7 @@ async function openDetail(itemId, skipRefresh = false, forceRefresh = false) {
   }
   currentDetailId = String(itemId);
   detailLogPage = 1;
+  if (!skipRefresh) trackEvent("view_item_detail", { item_id: String(itemId) });
   if (!skipRefresh) detailApprovedLogs = [];
   const history  = loadPriceHistory();
   const watchlist = loadWatchlist();

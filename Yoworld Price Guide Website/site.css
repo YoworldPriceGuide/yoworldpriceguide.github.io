@@ -1,0 +1,307 @@
+/* ── WEBSITE LAYOUT ──
+   Overrides for style.css, which is written for the 360px sidebar.
+   The page scrolls normally and the content sits in a centred column. */
+
+:root {
+  --content-width: 960px;
+  --header-h: 120px; /* kept in sync with the real header height in app.js */
+}
+
+html, body {
+  height: auto;
+  min-height: 100%;
+}
+
+body {
+  padding-top: var(--header-h);
+}
+
+/* The website has no sidebar, so there is nothing to close */
+.header-actions {
+  display: none;
+}
+
+/* Logo in the top right of the header */
+.site-logo {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+/* Header tabs are links now, so they should not be underlined */
+a.tab {
+  text-decoration: none;
+}
+
+/* Keep the detail page lined up with the content column */
+.detail-header {
+  padding-left: max(16px, calc((100% - var(--content-width)) / 2));
+  padding-right: max(16px, calc((100% - var(--content-width)) / 2));
+}
+
+header {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+main {
+  width: min(calc(100% - 32px), var(--content-width));
+  height: auto;
+  margin: 0 auto;
+  padding: 0 0 40px;
+  overflow: visible;
+}
+
+/* Item details open as a sidebar on the right, under the fixed header */
+.detail-page {
+  top: var(--header-h);
+  bottom: 0;
+  left: auto;
+  right: 0;
+  width: min(420px, 100vw);
+  border-left: 1px solid var(--border);
+}
+
+.detail-page .detail-header {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.detail-page .detail-body {
+  max-width: none;
+  margin: 0;
+}
+
+/* More room, so more columns fit */
+#search-results {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 700px) {
+  #search-results {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  #search-results {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── LANDING (search tab) ── */
+.landing {
+  margin-top: 0;
+}
+
+.hero {
+  text-align: left;
+  padding: 32px 0 24px;
+}
+
+.hero-title {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 620px;
+  margin: 0 0 22px;
+  line-height: 1.5;
+}
+
+/* Segmented control for the store status filter on search results */
+.search-filter-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.segmented {
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  background: #ecebf3;
+  border-radius: 10px;
+}
+
+.segmented-opt {
+  background: none;
+  border: none;
+  border-radius: 7px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.segmented-opt:hover:not(.active) {
+  color: var(--text);
+}
+
+.segmented-opt.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.hero-hint {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Full-width band in the page's light grey, so it blends into the results area */
+.landing > .hero {
+  background: var(--bg);
+  margin: 0 calc((100% - 100vw) / 2);
+  padding-left: max(16px, calc((100vw - var(--content-width)) / 2));
+  padding-right: max(16px, calc((100vw - var(--content-width)) / 2));
+}
+
+.landing-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.feature-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--purple-light);
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.feature-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.feature-card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Once there are results, the feature cards get out of the way */
+.landing:has(#search-results:not(:empty)) .landing-features {
+  display: none;
+}
+
+.landing:has(#search-results:not(:empty)) .hero {
+  padding-top: 24px;
+  padding-bottom: 16px;
+}
+
+@media (max-width: 700px) {
+  .landing-features {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 26px;
+  }
+}
+
+/* Link to the Chrome extension, next to the logo in the header */
+.extension-cta {
+  margin-left: auto; /* keeps the link and the logo at the right edge */
+  align-self: center;
+  margin-bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.extension-cta:hover {
+  background: var(--purple-mid);
+}
+
+/* Buy and Sell: the list and the export panel sit side by side */
+#tab-buy.active,
+#tab-sell.active {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+#tab-buy > section,
+#tab-sell > section {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Buy and Sell fit as many tiles as the width allows, so rows hold more items */
+#buy-cards,
+#sell-cards {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+/* Buy and Sell use the full width: list on the left, export panel flush right */
+main:has(#tab-buy.active),
+main:has(#tab-sell.active) {
+  width: 100%;
+  padding: 0;
+}
+
+/* The panel is fixed under the top bar, so the list leaves room for it */
+#tab-buy.active,
+#tab-sell.active {
+  padding-left: 16px;
+  padding-right: 56px; /* collapsed strip */
+}
+
+#tab-buy.paintboard-active,
+#tab-sell.paintboard-active {
+  padding-right: 436px; /* expanded panel + gap */
+}
+
+/* On narrow screens the panel floats over the list instead of pushing it */
+@media (max-width: 800px) {
+  #tab-buy.active,
+  #tab-sell.active,
+  #tab-buy.paintboard-active,
+  #tab-sell.paintboard-active {
+    padding-right: 16px;
+  }
+
+  .paintboard-bar {
+    width: min(420px, 100vw);
+    z-index: 40;
+  }
+
+  .paintboard-bar.collapsed {
+    width: 40px;
+  }
+}

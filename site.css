@@ -226,22 +226,24 @@ main {
   }
 }
 
-/* Link to the Chrome extension, next to the logo in the header */
+/* Link to the Chrome extension: a floating button in the bottom-left corner */
 .extension-cta {
-  margin-left: auto; /* keeps the link and the logo at the right edge */
-  align-self: center;
-  margin-bottom: 14px;
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 35; /* below the paintboard sidebar (z-index 40) so it never covers the Export button */
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 12px;
+  padding: 10px 16px;
   border-radius: 999px;
   background: var(--purple);
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
   text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 .extension-cta:hover {

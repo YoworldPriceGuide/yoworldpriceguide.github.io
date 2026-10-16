@@ -1164,6 +1164,24 @@ h2 {
 
 .paintboard-preview-panel.hidden { display: none; }
 
+/* Shown on narrow screens only (see site.css); hidden while the sidebar is open */
+.generate-paintboards-btn {
+  display: none;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.generate-paintboards-btn:hover { background: var(--purple-mid); }
+.generate-paintboards-btn.hidden { display: none; }
+
 /* Export panel: a column beside the list that stays in view while the list scrolls */
 .paintboard-bar {
   position: fixed;

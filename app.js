@@ -757,7 +757,9 @@ let sellExportSelection = new Set();
 
 // null (sidebar closed) or "board" (390x260 paintboard) —
 // the sidebar opens in board mode by default. In-memory only, resets on reload.
-const paintboardMode = { buy: "board", sell: "board" };
+// On narrow screens the buy sidebar starts closed; the "Generate paintboards" button opens it.
+const isNarrowScreen = window.matchMedia("(max-width: 800px)").matches;
+const paintboardMode = { buy: isNarrowScreen ? null : "board", sell: "board" };
 // The format last chosen in the panel, used when the panel is reopened
 const paintboardFormat = { buy: "board", sell: "board" };
 
@@ -1946,6 +1948,8 @@ function syncPaintboardMode(listType) {
   const formatRadio = document.querySelector(`input[name="export-format-${listType}"][value="${mode}"]`);
   if (formatRadio) formatRadio.checked = true;
   if (tab) tab.classList.toggle("paintboard-active", active);
+  const generateBtn = document.getElementById(`generate-paintboards-${listType}`);
+  if (generateBtn) generateBtn.classList.toggle("hidden", active);
   if (exportLabel) exportLabel.textContent = "Export";
 }
 

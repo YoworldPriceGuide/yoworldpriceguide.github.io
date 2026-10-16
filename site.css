@@ -304,4 +304,13 @@ main:has(#tab-sell.active) {
   .paintboard-bar.collapsed {
     width: 40px;
   }
+
+  /* Buy page: the sidebar is closed until "Generate paintboards" opens it */
+  #paintboard-bar-buy.collapsed {
+    display: none;
+  }
+
+  .generate-paintboards-btn {
+    display: block;
+  }
 }

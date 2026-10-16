@@ -250,6 +250,13 @@ main {
   background: var(--purple-mid);
 }
 
+/* Small screens: the extension button is hidden entirely (same breakpoint as the mobile sidebar) */
+@media (max-width: 800px) {
+  .extension-cta {
+    display: none;
+  }
+}
+
 /* Buy and Sell: the list and the export panel sit side by side */
 #tab-buy.active,
 #tab-sell.active {

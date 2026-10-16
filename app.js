@@ -841,7 +841,7 @@ const EXPORT_BORDER_OPTIONS = [
 
 function loadExportBorder() {
   const key = localStorage.getItem("exportBorder");
-  return EXPORT_BORDER_OPTIONS.find(o => o.key === key) || EXPORT_BORDER_OPTIONS[1];
+  return EXPORT_BORDER_OPTIONS.find(o => o.key === key) || EXPORT_BORDER_OPTIONS[0];
 }
 
 function setExportBorder(key) {
@@ -851,7 +851,7 @@ function setExportBorder(key) {
 
 function loadExportBackground() {
   const key = localStorage.getItem("exportBackground");
-  return EXPORT_BACKGROUNDS.find(b => b.key === key) || EXPORT_BACKGROUNDS.find(b => b.key === "light-grey");
+  return EXPORT_BACKGROUNDS.find(b => b.key === key) || EXPORT_BACKGROUNDS.find(b => b.key === "white");
 }
 
 function setExportBackground(key) {
@@ -927,13 +927,13 @@ function setExportFont(key) {
 
 const EXPORT_COUNT_OPTIONS = [
   { count: 2, cols: 2, rows: 1, badgeSize: 10, nameSize: 12, priceSize: 18, rowGap: 8 },
-  { count: 6, cols: 3, rows: 2, badgeSize: 8, nameSize: 9, priceSize: 10, rowGap: 8 },
+  { count: 6, cols: 3, rows: 2, badgeSize: 8, nameSize: 9, priceSize: 13, rowGap: 8 },
 ];
 
 const FB_POST_COUNT_OPTIONS = [
-  { count: 25, cols: 5, rows: 5, badgeSize: 16, nameSize: 18, priceSize: 20, rowGap: 18 },
-  { count: 50, cols: 5, rows: 10, badgeSize: 14, nameSize: 16, priceSize: 18, rowGap: 16 },
-  { count: 100, cols: 10, rows: 10, badgeSize: 12, nameSize: 14, priceSize: 16, rowGap: 14 },
+  { count: 25, cols: 5, rows: 5, badgeSize: 16, nameSize: 18, priceSize: 22, rowGap: 18 },
+  { count: 50, cols: 5, rows: 10, badgeSize: 14, nameSize: 16, priceSize: 20, rowGap: 16 },
+  { count: 100, cols: 10, rows: 10, badgeSize: 12, nameSize: 14, priceSize: 18, rowGap: 14 },
 ];
 
 const FB_POST_COL_GAP = 18;
@@ -966,7 +966,7 @@ function loadFBCategoryHeadings() {
 }
 
 function loadExportShowBadge() {
-  return localStorage.getItem("exportShowBadge") !== "false";
+  return localStorage.getItem("exportShowBadge") === "true";
 }
 
 function setExportShowBadge(show) {
@@ -1477,7 +1477,7 @@ function buildBoardHtml(items, imgSrcs, listType) {
         row-gap: ${rowGap}px;
         font-family: ${font.family};
       }
-      ${tileStyleBlock(theme, { badgeSize, nameSize, priceSize })}
+      ${tileStyleBlock(theme, { badgeSize, nameSize, priceSize, centerPrice: true })}
     </style>`;
 }
 
@@ -1936,7 +1936,6 @@ function syncPaintboardMode(listType) {
   const active = mode !== null;
   const panel = document.getElementById(`paintboard-preview-panel-${listType}`);
   const bar = document.getElementById(`paintboard-bar-${listType}`);
-  const selectAllRow = document.getElementById(`select-all-row-${listType}`);
   const tab = document.getElementById(`tab-${listType}`);
   const exportLabel = document.getElementById(`export-${listType}-label`);
   if (panel) panel.classList.toggle("hidden", !active);
@@ -1944,7 +1943,6 @@ function syncPaintboardMode(listType) {
   // FB posts set their own item count, so the per-board count doesn't apply
   const countPicker = document.getElementById(`export-count-picker-${listType}`);
   if (countPicker) countPicker.classList.toggle("hidden", mode === "facebook");
-  if (selectAllRow) selectAllRow.classList.toggle("hidden", !active);
   const formatRadio = document.querySelector(`input[name="export-format-${listType}"][value="${mode}"]`);
   if (formatRadio) formatRadio.checked = true;
   if (tab) tab.classList.toggle("paintboard-active", active);
@@ -2090,10 +2088,30 @@ function renderAll() {
   // Re-render search results to update watch button states
   const resultsEl = document.getElementById("search-results");
   if (resultsEl && Object.keys(searchResultsMap).length) {
-    const items = Object.values(searchResultsMap);
-    resultsEl.innerHTML = items.map(searchResultCard).join("");
+    renderSearchCards(resultsEl, Object.values(searchResultsMap));
   }
 
+}
+
+// Updates the search grid in place: only cards whose markup changed are replaced,
+// so clicking Buy/Sell doesn't rebuild the whole list and make it jump.
+function renderSearchCards(resultsEl, items) {
+  const html = items.map(searchResultCard);
+  const cards = [...resultsEl.children];
+  const sameShape = cards.length === items.length && cards.every(el => el.classList.contains("search-tile-card"));
+  if (!sameShape) {
+    resultsEl.innerHTML = html.join("");
+    [...resultsEl.children].forEach((el, i) => { el._renderedHtml = html[i]; });
+    return;
+  }
+  cards.forEach((el, i) => {
+    if (el._renderedHtml === html[i]) return;
+    const tpl = document.createElement("template");
+    tpl.innerHTML = html[i].trim();
+    const card = tpl.content.firstElementChild;
+    card._renderedHtml = html[i];
+    el.replaceWith(card);
+  });
 }
 
 // ── Search ─────────────────────────────────────────────────────
@@ -2194,7 +2212,7 @@ async function doSearch(query, page = 1) {
     }
 
     items.forEach(item => { searchResultsMap[item.id] = item; });
-    resultsEl.innerHTML = items.map(searchResultCard).join("");
+    renderSearchCards(resultsEl, items);
     renderSearchPagination();
 
     // Refresh prices for visible items from Supabase in the background
@@ -2218,7 +2236,7 @@ async function doSearch(query, page = 1) {
       }
       if (changed) {
         savePriceHistory(history);
-        resultsEl.innerHTML = items.map(searchResultCard).join("");
+        renderSearchCards(resultsEl, items);
       }
     });
   } catch (e) {

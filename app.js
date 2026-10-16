@@ -2247,7 +2247,12 @@ document.addEventListener("click", (e) => {
   // Open detail page when clicking a card (not a button inside it)
   if (!e.target.closest("[data-action]") && !e.target.closest("button")) {
     const card = e.target.closest("[data-detail-id]");
-    if (card) { openDetail(card.dataset.detailId); return; }
+    if (card) {
+      const cardId = card.dataset.detailId;
+      requestPriceIfMissing(cardId, searchResultsMap[cardId]?.name ?? loadPriceHistory()[cardId]?.name ?? null);
+      openDetail(cardId);
+      return;
+    }
   }
 
   const btn = e.target.closest("[data-action]");

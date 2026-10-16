@@ -406,6 +406,14 @@ async function requestPriceCheck(itemId, itemName) {
   }
 }
 
+// Called when Buy/Sell is clicked. Requests a price only if the item has none yet and hasn't been requested.
+async function requestPriceIfMissing(itemId, itemName) {
+  if (itemCoinRange(itemId) !== null) return;
+  if (await getRequestedFlag(itemId)) return;
+  const ok = await requestPriceCheck(itemId, itemName);
+  if (ok) await setRequestedFlag(itemId, itemName);
+}
+
 function updateDetailButtons(itemId, state) {
   const actionsEl = document.getElementById("detail-header-actions");
   if (!actionsEl) return;
@@ -2353,6 +2361,7 @@ document.addEventListener("click", (e) => {
     })();
   }
   if (btn.dataset.action === "watch-buy") {
+    requestPriceIfMissing(id, searchResultsMap[id]?.name ?? null);
     if (searchResultsMap[id]) (async () => {
       btn.disabled = true;
       try {
@@ -2375,6 +2384,7 @@ document.addEventListener("click", (e) => {
     })();
   }
   if (btn.dataset.action === "watch-sell") {
+    requestPriceIfMissing(id, searchResultsMap[id]?.name ?? null);
     if (searchResultsMap[id]) (async () => {
       btn.disabled = true;
       try {
@@ -2399,6 +2409,7 @@ document.addEventListener("click", (e) => {
   if (btn.dataset.action === "detail-watch-buy" || btn.dataset.action === "detail-watch-sell") {
     const numId = Number(id);
     const isBuy = btn.dataset.action === "detail-watch-buy";
+    requestPriceIfMissing(numId, currentDetailName);
     btn.disabled = true;
     (async () => {
       try {

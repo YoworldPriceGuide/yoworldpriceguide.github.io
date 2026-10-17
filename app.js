@@ -775,7 +775,7 @@ const CARD_BG_OPTIONS = [
 // combination can be mixed and matched, rather than one bundled "theme".
 const EXPORT_BACKGROUNDS = [
   // Plain Colors (9)
-  { key: "white", label: "White", swatch: "#ffffff", pageBg: "#ffffff", tileBg: "transparent", tileBorder: "#d8d8d8", nameColor: "#1a1a2e" },
+  { key: "white", label: "White", swatch: "#ffffff", pageBg: "#ffffff", tileBg: "transparent", tileBorder: "#d8d8d8", nameColor: "#374151", priceColor: "#000000" },
   { key: "light-grey", label: "Light Grey", swatch: "#f3f4f6", pageBg: "#f3f4f6", tileBg: "transparent", tileBorder: "#d1d5db", nameColor: "#1f2937" },
   { key: "cream", label: "Cream", swatch: "#fefdf8", pageBg: "#fefdf8", tileBg: "transparent", tileBorder: "#fde68a", nameColor: "#78350f" },
   { key: "baby-pink", label: "Baby Pink", swatch: "#fce7f3", pageBg: "#fce7f3", tileBg: "transparent", tileBorder: "#f472b6", nameColor: "#831843" },
@@ -894,7 +894,7 @@ function getExportStyle() {
     tileBg: bg.tileBg,
     tileBorder: tileBorder,
     nameColor: bg.nameColor,
-    priceColor: badge.badgeText,
+    priceColor: bg.priceColor ?? badge.badgeText,
     tileGlow: effect.tileGlow,
     tileRadius: border.radius,
     tileBorderOn: border.hasBorder || (effect.tileGlow !== "none"),

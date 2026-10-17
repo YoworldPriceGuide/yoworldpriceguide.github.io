@@ -130,89 +130,6 @@ async function setRequestedFlag(itemId, itemName) {
   });
 }
 
-async function getRequestedItems() {
-  const all = await chrome.storage.local.get(null);
-  return Object.keys(all)
-    .filter(key => key.startsWith("requested_") && all[key])
-    .map(key => ({
-      id: key.slice("requested_".length),
-      name: all[key]?.name || null
-    }));
-}
-
-async function fetchPriceRequestStatuses(itemIds) {
-  if (!itemIds.length) return {};
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_price_request_status`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-      },
-      body: JSON.stringify({ p_item_ids: itemIds.map(Number) })
-    });
-    if (!res.ok) return {};
-    const rows = await res.json();
-    return Object.fromEntries(rows.map(r => [String(r.item_id), r.status]));
-  } catch (e) {
-    console.error("[Supabase] get_price_request_status exception:", e);
-    return {};
-  }
-}
-
-async function dismissPriceRequest(itemId) {
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/rpc/dismiss_price_request`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-      },
-      body: JSON.stringify({ p_item_id: Number(itemId) })
-    });
-  } catch (e) {
-    console.error("[Supabase] dismiss_price_request exception:", e);
-  }
-}
-
-async function checkFulfilledPriceRequests() {
-  const requested = await getRequestedItems();
-  if (!requested.length) return [];
-
-  const statuses = await fetchPriceRequestStatuses(requested.map(r => r.id));
-
-  return requested
-    .filter(({ id }) => statuses[id] === "fulfilled")
-    .map(({ id, name }) => ({ id, name: name || `Item #${id}` }));
-}
-
-function renderPriceRequestBanner(items) {
-  const banner = document.getElementById("price-request-banner");
-  if (!banner) return;
-
-  if (!items.length) {
-    banner.classList.add("hidden");
-    banner.innerHTML = "";
-    return;
-  }
-
-  const itemLink = item =>
-    `<button class="price-request-banner-item" data-action="open-price-request-item" data-id="${item.id}" data-name="${item.name}">${item.name}</button>`;
-
-  const label = items.length === 1
-    ? `<button class="price-request-banner-link" data-action="open-price-request-item" data-id="${items[0].id}" data-name="${items[0].name}">${items[0].name} now has a price! <span class="price-request-banner-arrow">›</span></button>`
-    : `${items.length} items you requested now have prices: ${items.map(itemLink).join(", ")}`;
-
-  banner.dataset.ids = items.map(i => i.id).join(",");
-  banner.innerHTML = `
-    <span class="price-request-banner-text">🎉 ${label}</span>
-    <button class="price-request-banner-dismiss" data-action="dismiss-price-banner" title="Dismiss">✕</button>
-  `;
-  banner.classList.remove("hidden");
-}
-
 // ── Unsubmitted price log reminder ─────────────────────────────
 function getUnsubmittedPriceLogs() {
   const history = loadPriceHistory();
@@ -2310,24 +2227,6 @@ document.addEventListener("click", (e) => {
   if (btn.dataset.action === "set-export-count") setExportItemCount(Number(btn.dataset.count));
   if (btn.dataset.action === "set-export-show-badge") setExportShowBadge(btn.checked);
 
-  if (btn.dataset.action === "open-price-request-item") {
-    const reqItemId = btn.dataset.id;
-    if (!searchResultsMap[reqItemId]) {
-      searchResultsMap[reqItemId] = { id: Number(reqItemId), name: btn.dataset.name || "Item" };
-    }
-    openDetail(reqItemId, false, true);
-    return;
-  }
-
-  if (btn.dataset.action === "dismiss-price-banner") {
-    const banner = document.getElementById("price-request-banner");
-    const ids = (banner?.dataset.ids || "").split(",").filter(Boolean);
-    chrome.storage.local.remove(ids.map(id => `requested_${id}`));
-    ids.forEach(id => dismissPriceRequest(id));
-    renderPriceRequestBanner([]);
-    return;
-  }
-
   if (btn.dataset.action === "dismiss-submit-reminder") {
     localStorage.setItem("submitReminderDismissedDate", new Date().toISOString().split("T")[0]);
     renderSubmitReminderBanner();
@@ -3143,7 +3042,6 @@ new ResizeObserver(() => {
 resolveCategories();
 syncSupabasePrices();
 syncApprovedPriceLogs();
-checkFulfilledPriceRequests().then(renderPriceRequestBanner);
 renderSubmitReminderBanner();
 buildPaintboardRail("buy");
 buildPaintboardRail("sell");

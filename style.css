@@ -97,36 +97,6 @@ header {
   line-height: 1.4;
 }
 
-.price-request-banner-link {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font: inherit;
-  font-weight: 500;
-  color: var(--purple);
-  text-align: left;
-  padding: 0;
-}
-
-.price-request-banner-link:hover {
-  text-decoration: underline;
-}
-
-.price-request-banner-arrow {
-  font-weight: 700;
-}
-
-.price-request-banner-item {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font: inherit;
-  font-weight: 600;
-  color: var(--purple);
-  padding: 0;
-  text-decoration: underline;
-}
-
 .price-request-banner-dismiss {
   background: none;
   border: none;

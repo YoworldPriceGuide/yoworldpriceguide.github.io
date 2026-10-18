@@ -715,27 +715,28 @@ const EXPORT_BACKGROUNDS = [
 ];
 
 const EXPORT_BADGE_COLORS = [
+  { key: "black-badge", label: "Black", swatch: "#000000", badgeBg: "#e5e7eb", badgeText: "#000000" },
   // Plain Color Badges (9)
-  { key: "white-badge", label: "White", swatch: "#ffffff", badgeBg: "#f3f4f6", badgeText: "#6b7280" },
-  { key: "light-grey-badge", label: "Light Grey", swatch: "#f3f4f6", badgeBg: "#e5e7eb", badgeText: "#374151" },
-  { key: "cream-badge", label: "Cream", swatch: "#fefdf8", badgeBg: "#fef3c7", badgeText: "#78350f" },
-  { key: "baby-pink-badge", label: "Baby Pink", swatch: "#fce7f3", badgeBg: "#fce7f3", badgeText: "#be185d" },
-  { key: "soft-peach-badge", label: "Soft Peach", swatch: "#fed7aa", badgeBg: "#fed7aa", badgeText: "#b45309" },
-  { key: "baby-blue-badge", label: "Baby Blue", swatch: "#cffafe", badgeBg: "#cffafe", badgeText: "#0369a1" },
-  { key: "mint-green-badge", label: "Mint Green", swatch: "#ccfbf1", badgeBg: "#ccfbf1", badgeText: "#0d7377" },
-  { key: "lavender-badge", label: "Lavender", swatch: "#e9d5ff", badgeBg: "#e9d5ff", badgeText: "#6b21a8" },
-  { key: "soft-yellow-badge", label: "Soft Yellow", swatch: "#fef3c7", badgeBg: "#fef3c7", badgeText: "#ca8a04" },
-  { key: "dark-mode-badge", label: "Dark Mode", swatch: "#0f172a", badgeBg: "#1e293b", badgeText: "#e2e8f0" },
+  { key: "white-badge", label: "White", swatch: "#6b7280", badgeBg: "#f3f4f6", badgeText: "#6b7280" },
+  { key: "light-grey-badge", label: "Light Grey", swatch: "#374151", badgeBg: "#e5e7eb", badgeText: "#374151" },
+  { key: "cream-badge", label: "Cream", swatch: "#78350f", badgeBg: "#fef3c7", badgeText: "#78350f" },
+  { key: "baby-pink-badge", label: "Baby Pink", swatch: "#be185d", badgeBg: "#fce7f3", badgeText: "#be185d" },
+  { key: "soft-peach-badge", label: "Soft Peach", swatch: "#b45309", badgeBg: "#fed7aa", badgeText: "#b45309" },
+  { key: "baby-blue-badge", label: "Baby Blue", swatch: "#0369a1", badgeBg: "#cffafe", badgeText: "#0369a1" },
+  { key: "mint-green-badge", label: "Mint Green", swatch: "#0d7377", badgeBg: "#ccfbf1", badgeText: "#0d7377" },
+  { key: "lavender-badge", label: "Lavender", swatch: "#6b21a8", badgeBg: "#e9d5ff", badgeText: "#6b21a8" },
+  { key: "soft-yellow-badge", label: "Soft Yellow", swatch: "#ca8a04", badgeBg: "#fef3c7", badgeText: "#ca8a04" },
+  { key: "dark-mode-badge", label: "Dark Mode", swatch: "#e2e8f0", badgeBg: "#1e293b", badgeText: "#e2e8f0" },
 
   // Gradient Color Badges (10)
-  { key: "starlight-badge", label: "Starlight", swatch: "#d080c0", badgeBg: "#e8d0e0", badgeText: "#5a2a5a" },
-  { key: "candy-floss-badge", label: "Candy Floss", swatch: "#d0c8d8", badgeBg: "#e8dfe8", badgeText: "#5a4a6a" },
-  { key: "twilight-badge", label: "Twilight", swatch: "#7080c0", badgeBg: "#c0c8e0", badgeText: "#2a2a5a" },
-  { key: "sunrise-badge", label: "Sunrise", swatch: "#ff7fa0", badgeBg: "#ffc8d8", badgeText: "#6a2a3a" },
-  { key: "peach-dream-badge", label: "Peach Dream", swatch: "#e8a8d8", badgeBg: "#f0d8e8", badgeText: "#5a2a5a" },
-  { key: "mint-dream-badge", label: "Mint Dream", swatch: "#b0e0e8", badgeBg: "#d8f0f8", badgeText: "#1a4a5a" },
-  { key: "rose-garden-badge", label: "Rose Garden", swatch: "#e8a0d8", badgeBg: "#f0d0e8", badgeText: "#5a1a4a" },
-  { key: "coral-sunset-badge", label: "Coral Sunset", swatch: "#ffc870", badgeBg: "#ffe8c0", badgeText: "#6a3a1a" },
+  { key: "starlight-badge", label: "Starlight", swatch: "#5a2a5a", badgeBg: "#e8d0e0", badgeText: "#5a2a5a" },
+  { key: "candy-floss-badge", label: "Candy Floss", swatch: "#5a4a6a", badgeBg: "#e8dfe8", badgeText: "#5a4a6a" },
+  { key: "twilight-badge", label: "Twilight", swatch: "#2a2a5a", badgeBg: "#c0c8e0", badgeText: "#2a2a5a" },
+  { key: "sunrise-badge", label: "Sunrise", swatch: "#6a2a3a", badgeBg: "#ffc8d8", badgeText: "#6a2a3a" },
+  { key: "peach-dream-badge", label: "Peach Dream", swatch: "#5a2a5a", badgeBg: "#f0d8e8", badgeText: "#5a2a5a" },
+  { key: "mint-dream-badge", label: "Mint Dream", swatch: "#1a4a5a", badgeBg: "#d8f0f8", badgeText: "#1a4a5a" },
+  { key: "rose-garden-badge", label: "Rose Garden", swatch: "#5a1a4a", badgeBg: "#f0d0e8", badgeText: "#5a1a4a" },
+  { key: "coral-sunset-badge", label: "Coral Sunset", swatch: "#6a3a1a", badgeBg: "#ffe8c0", badgeText: "#6a3a1a" },
 ];
 
 const EXPORT_CARD_EFFECTS = [
@@ -766,8 +767,55 @@ function setExportBorder(key) {
   renderAll();
 }
 
+const CUSTOM_DEFAULTS = { background: "#ffffff", badgecolor: "#000000", effect: "#7525e2" };
+const CUSTOM_HEX_KEYS = { background: "exportCustomBackground", badgecolor: "exportCustomBadgeColor", effect: "exportCustomGlow" };
+const CUSTOM_SELECT_KEYS = { background: "exportBackground", badgecolor: "exportBadgeColor", effect: "exportCardEffect" };
+const HEX_RE = /^#[0-9a-f]{6}$/i;
+
+function loadCustomHex(kind) {
+  const saved = (localStorage.getItem(CUSTOM_HEX_KEYS[kind]) || "").trim();
+  return HEX_RE.test(saved) ? saved.toLowerCase() : CUSTOM_DEFAULTS[kind];
+}
+
+function applyCustomHex(kind, hex) {
+  localStorage.setItem(CUSTOM_HEX_KEYS[kind], hex.toLowerCase());
+  localStorage.setItem(CUSTOM_SELECT_KEYS[kind], "custom");
+  renderAll();
+}
+
+function hexRgb(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function mixHex(hex, target, amount) {
+  const a = hexRgb(hex), b = hexRgb(target);
+  const mixed = a.map((v, i) => Math.round(v + (b[i] - v) * amount));
+  return "#" + mixed.map(v => v.toString(16).padStart(2, "0")).join("");
+}
+
+function customBackgroundOption(hex) {
+  return { key: "custom", label: hex.toUpperCase(), swatch: hex, pageBg: hex, tileBg: "transparent", tileBorder: mixHex(hex, "#000000", 0.25) };
+}
+
+function customBadgeOption(hex) {
+  return { key: "custom", label: hex.toUpperCase(), swatch: hex, badgeBg: mixHex(hex, "#ffffff", 0.85), badgeText: hex };
+}
+
+function customEffectOption(hex) {
+  const [r, g, b] = hexRgb(hex);
+  return {
+    key: "custom",
+    label: hex.toUpperCase(),
+    swatch: hex,
+    tileGlow: `0 0 8px 2px rgba(${r},${g},${b},0.65), 0 0 18px 5px rgba(${r},${g},${b},0.35), inset 0 0 10px rgba(${r},${g},${b},0.2)`,
+    tileBorder: hex,
+  };
+}
+
 function loadExportBackground() {
   const key = localStorage.getItem("exportBackground");
+  if (key === "custom") return customBackgroundOption(loadCustomHex("background"));
   return EXPORT_BACKGROUNDS.find(b => b.key === key) || EXPORT_BACKGROUNDS.find(b => b.key === "white");
 }
 
@@ -778,7 +826,8 @@ function setExportBackground(key) {
 
 function loadExportBadgeColor() {
   const key = localStorage.getItem("exportBadgeColor");
-  return EXPORT_BADGE_COLORS.find(b => b.key === key) || EXPORT_BADGE_COLORS.find(b => b.key === "light-grey-badge");
+  if (key === "custom") return customBadgeOption(loadCustomHex("badgecolor"));
+  return EXPORT_BADGE_COLORS.find(b => b.key === key) || EXPORT_BADGE_COLORS.find(b => b.key === "black-badge");
 }
 
 function setExportBadgeColor(key) {
@@ -788,6 +837,7 @@ function setExportBadgeColor(key) {
 
 function loadExportCardEffect() {
   const key = localStorage.getItem("exportCardEffect");
+  if (key === "custom") return customEffectOption(loadCustomHex("effect"));
   return EXPORT_CARD_EFFECTS.find(e => e.key === key) || EXPORT_CARD_EFFECTS[0];
 }
 
@@ -804,13 +854,13 @@ function getExportStyle() {
   const badge = loadExportBadgeColor();
   const effect = loadExportCardEffect();
   const border = loadExportBorder();
-  const tileBorder = effect.tileBorder ?? bg.tileBorder;
+  const tileBorder = "#d1d5db";
   return {
     swatch: bg.swatch,
     pageBg: bg.pageBg,
     tileBg: bg.tileBg,
     tileBorder: tileBorder,
-    nameColor: bg.nameColor,
+    nameColor: "#374151",
     priceColor: bg.priceColor ?? badge.badgeText,
     tileGlow: effect.tileGlow,
     tileRadius: border.radius,
@@ -847,11 +897,12 @@ const EXPORT_COUNT_OPTIONS = [
   { count: 6, cols: 3, rows: 2, badgeSize: 8, nameSize: 9, priceSize: 13, rowGap: 8 },
 ];
 
-const FB_POST_COUNT_OPTIONS = [
-  { count: 25, cols: 5, rows: 5, badgeSize: 16, nameSize: 18, priceSize: 22, rowGap: 18 },
-  { count: 50, cols: 5, rows: 10, badgeSize: 14, nameSize: 16, priceSize: 20, rowGap: 16 },
-  { count: 100, cols: 10, rows: 10, badgeSize: 12, nameSize: 14, priceSize: 18, rowGap: 14 },
-];
+const FB_POST_COLS = [3, 4, 5, 6];
+const FB_POST_MAX_RATIO = 2;
+const FB_POST_MAX_ITEMS = 36;
+const FB_POST_CELL_H = 350;
+const FB_POST_ROW_GAP = 18;
+const FB_POST_FONTS = { badgeSize: 16, nameSize: 18, priceSize: 20 };
 
 const FB_POST_COL_GAP = 18;
 const LOGO_SVG = "<svg width=\"150\" height=\"150\" viewBox=\"0 0 150 150\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M133.333 0H16.6667C7.5 0 0 7.5 0 16.6667V133.333C0 142.5 7.5 150 16.6667 150H133.333C142.5 150 150 142.5 150 133.333V16.6667C150 7.5 142.5 0 133.333 0ZM50 116.667H33.3333V75H50V116.667ZM83.3333 116.667H66.6667V91.6667H83.3333V116.667ZM83.3333 75H66.6667V58.3333H83.3333V75ZM116.667 116.667H100V33.3333H116.667V116.667Z\" fill=\"#7525E2\"/>\n<path d=\"M133.333 0H16.6667C7.5 0 0 7.5 0 16.6667V133.333C0 142.5 7.5 150 16.6667 150H133.333C142.5 150 150 142.5 150 133.333V16.6667C150 7.5 142.5 0 133.333 0ZM50 116.667H33.3333V75H50V116.667ZM83.3333 116.667H66.6667V91.6667H83.3333V116.667ZM83.3333 75H66.6667V58.3333H83.3333V75ZM116.667 116.667H100V33.3333H116.667V116.667Z\" fill=\"#7525E2\" fill-opacity=\"0.2\"/>\n</svg>";
@@ -867,14 +918,34 @@ function setExportItemCount(count) {
   renderAll();
 }
 
-function loadFBPostItemCount() {
-  const stored = Number(localStorage.getItem("fbPostItemCount"));
-  return FB_POST_COUNT_OPTIONS.find(o => o.count === stored) || FB_POST_COUNT_OPTIONS[0];
+const EXPORT_TITLE_DEFAULTS = { buy: "Want to Buy", sell: "Want to Sell" };
+
+function getExportTitle(listType) {
+  const saved = (localStorage.getItem(`exportTitle-${listType}`) || "").trim();
+  return saved || EXPORT_TITLE_DEFAULTS[listType];
 }
 
-function setFBPostItemCount(count) {
-  localStorage.setItem("fbPostItemCount", String(count));
+function setExportTitle(listType, text) {
+  localStorage.setItem(`exportTitle-${listType}`, text.trim());
   renderAll();
+}
+
+function fbPostHeight(rows) {
+  return 180 + rows * FB_POST_CELL_H + (rows - 1) * FB_POST_ROW_GAP;
+}
+
+// Picks the fewest columns whose post stays within FB_POST_MAX_RATIO of its width
+function fbPostLayout(itemCount) {
+  const n = Math.max(1, Math.min(itemCount, FB_POST_MAX_ITEMS));
+  for (const cols of FB_POST_COLS) {
+    const rows = Math.ceil(n / cols);
+    const width = FB_POST_BASE_W * cols / 5;
+    if (fbPostHeight(rows) <= width * FB_POST_MAX_RATIO) {
+      return { cols, rows, rowGap: FB_POST_ROW_GAP, width };
+    }
+  }
+  const cols = 6;
+  return { cols, rows: Math.ceil(n / cols), rowGap: FB_POST_ROW_GAP, width: FB_POST_BASE_W * cols / 5 };
 }
 
 // Category headings were removed from the FB Post options, so they are always off
@@ -1401,13 +1472,13 @@ function buildBoardHtml(items, imgSrcs, listType) {
 function buildFacebookPreviewHtml(items, imgSrcs, listType) {
   const theme = getExportStyle();
   const font = loadExportFont();
-  const fbSettings = loadFBPostItemCount();
-  const gridMax = fbSettings.count;
+  const layout = fbPostLayout(items.length);
+  const gridMax = layout.cols * layout.rows;
   const showBadge = loadExportShowBadge();
-  const title = listType === "sell" ? "Want to Sell" : "Want to Buy";
+  const title = getExportTitle(listType);
 
-  const FB_POST_W = FB_POST_BASE_W * (fbSettings.cols / 5);
-  const totalContentHeight = fbSettings.rows * 216 + (fbSettings.rows - 1) * fbSettings.rowGap;
+  const FB_POST_W = layout.width;
+  const totalContentHeight = layout.rows * FB_POST_CELL_H + (layout.rows - 1) * layout.rowGap;
   const FB_POST_H = 80 + 28 + 44 + totalContentHeight + 40;
 
   const cells = [];
@@ -1415,14 +1486,14 @@ function buildFacebookPreviewHtml(items, imgSrcs, listType) {
     cells.push(boardCellHtml(items[idx] ?? null, imgSrcs[idx] ?? null, listType, theme, showBadge));
   }
 
-  const gridTemplateRows = `repeat(${fbSettings.rows}, 216px)`;
+  const gridTemplateRows = `repeat(${layout.rows}, ${FB_POST_CELL_H}px)`;
 
   return `
     <div xmlns="http://www.w3.org/1999/xhtml" class="fb-post">
       <div class="fb-header">
         <span class="fb-title">${escapeHtml(title)}</span>
       </div>
-      <div class="fb-content" style="display: grid; grid-template-columns: repeat(${fbSettings.cols}, 1fr); column-gap: 8px; row-gap: ${fbSettings.rowGap}px;">
+      <div class="fb-content" style="display: grid; grid-template-columns: repeat(${layout.cols}, 1fr); column-gap: 8px; row-gap: ${layout.rowGap}px;">
         ${cells.join("")}
       </div>
     </div>
@@ -1446,24 +1517,24 @@ function buildFacebookPreviewHtml(items, imgSrcs, listType) {
       }
       .fb-content {
         display: grid;
-        grid-template-columns: repeat(${fbSettings.cols}, 1fr);
+        grid-template-columns: repeat(${layout.cols}, 1fr);
         column-gap: 8px;
-        row-gap: ${fbSettings.rowGap}px;
+        row-gap: ${layout.rowGap}px;
       }
-      ${tileStyleBlock(theme, { badgeSize: fbSettings.badgeSize, nameSize: fbSettings.nameSize, priceSize: fbSettings.priceSize, tilePad: 12, priceTop: 8, centerPrice: true })}
+      ${tileStyleBlock(theme, { badgeSize: FB_POST_FONTS.badgeSize, nameSize: FB_POST_FONTS.nameSize, priceSize: FB_POST_FONTS.priceSize, tilePad: 12, priceTop: 8, centerPrice: true })}
     </style>`;
 }
 
 function buildFacebookHtml(items, imgSrcs, listType) {
   const theme = getExportStyle();
   const font = loadExportFont();
-  const fbSettings = loadFBPostItemCount();
-  const gridMax = fbSettings.count;
+  const layout = fbPostLayout(items.length);
+  const gridMax = layout.cols * layout.rows;
   const showBadge = loadExportShowBadge();
-  const title = listType === "sell" ? "Want to Sell" : "Want to Buy";
+  const title = getExportTitle(listType);
   const showHeadings = loadFBCategoryHeadings();
 
-  const FB_POST_W = FB_POST_BASE_W * (fbSettings.cols / 5);
+  const FB_POST_W = layout.width;
 
   let totalContentHeight = 0;
   if (showHeadings) {
@@ -1473,17 +1544,17 @@ function buildFacebookHtml(items, imgSrcs, listType) {
     for (let i = 0; i < categories.length; i++) {
       const [, categoryItems] = categories[i];
       const itemsInCategory = categoryItems.slice(0, gridMax).length;
-      const rowsNeeded = Math.ceil(itemsInCategory / fbSettings.cols);
+      const rowsNeeded = Math.ceil(itemsInCategory / layout.cols);
 
       totalContentHeight += 40;
-      totalContentHeight += rowsNeeded * 216;
-      totalContentHeight += (rowsNeeded) * fbSettings.rowGap;
+      totalContentHeight += rowsNeeded * FB_POST_CELL_H;
+      totalContentHeight += (rowsNeeded) * layout.rowGap;
       if (i < categories.length - 1) {
-        totalContentHeight += fbSettings.rowGap;
+        totalContentHeight += layout.rowGap;
       }
     }
   } else {
-    totalContentHeight = fbSettings.rows * 216 + (fbSettings.rows - 1) * fbSettings.rowGap;
+    totalContentHeight = layout.rows * FB_POST_CELL_H + (layout.rows - 1) * layout.rowGap;
   }
 
   const FB_POST_H = 80 + 28 + 44 + totalContentHeight + 40;
@@ -1519,21 +1590,21 @@ function buildFacebookHtml(items, imgSrcs, listType) {
   let gridTemplateRows = "";
   if (showHeadings) {
     const groups = groupItemsByCategory(items);
-    const itemHeightPx = 216;
+    const itemHeightPx = FB_POST_CELL_H;
     const headingHeightPx = 40;
     let rowsDefinition = [];
 
     for (const [categoryName, categoryItems] of Object.entries(groups)) {
       rowsDefinition.push(`${headingHeightPx}px`);
       const itemsInCategory = categoryItems.slice(0, gridMax).length;
-      const rowsNeeded = Math.ceil(itemsInCategory / fbSettings.cols);
+      const rowsNeeded = Math.ceil(itemsInCategory / layout.cols);
       for (let i = 0; i < rowsNeeded; i++) {
         rowsDefinition.push(`${itemHeightPx}px`);
       }
     }
     gridTemplateRows = rowsDefinition.join(" ");
   } else {
-    gridTemplateRows = `repeat(${fbSettings.rows}, 216px)`;
+    gridTemplateRows = `repeat(${layout.rows}, ${FB_POST_CELL_H}px)`;
   }
 
   return `
@@ -1573,12 +1644,12 @@ function buildFacebookHtml(items, imgSrcs, listType) {
         flex: 1;
         min-height: 0;
         display: grid;
-        grid-template-columns: repeat(${fbSettings.cols}, 1fr);
+        grid-template-columns: repeat(${layout.cols}, 1fr);
         grid-template-rows: ${gridTemplateRows};
         column-gap: ${FB_POST_COL_GAP}px;
-        row-gap: ${fbSettings.rowGap}px;
+        row-gap: ${layout.rowGap}px;
       }
-      ${tileStyleBlock(theme, { badgeSize: fbSettings.badgeSize, nameSize: fbSettings.nameSize, priceSize: fbSettings.priceSize, tilePad: 12, priceTop: 8, centerPrice: true })}
+      ${tileStyleBlock(theme, { badgeSize: FB_POST_FONTS.badgeSize, nameSize: FB_POST_FONTS.nameSize, priceSize: FB_POST_FONTS.priceSize, tilePad: 12, priceTop: 8, centerPrice: true })}
     </style>`;
 }
 
@@ -1648,13 +1719,10 @@ async function exportSellListAsPNG() {
 }
 
 async function renderFacebookExportCanvas(items, listType) {
-  const fbSettings = loadFBPostItemCount();
-  const gridMax = fbSettings.count;
-  const FB_POST_W = FB_POST_BASE_W * (fbSettings.cols / 5);
-  const FB_POST_H = 140 + fbSettings.rows * 216 + (fbSettings.rows - 1) * fbSettings.rowGap + 40;
-  const W = FB_POST_W, H = FB_POST_H, SCALE = 1;
+  const slots = items.slice(0, FB_POST_MAX_ITEMS);
+  const layout = fbPostLayout(slots.length);
+  const W = layout.width, H = fbPostHeight(layout.rows), SCALE = 1;
 
-  const slots = items.slice(0, gridMax);
   const images = await Promise.all(slots.map(i => i ? loadItemImageDataUrl(i.id) : null));
   const bodyHtml = buildFacebookHtml(slots, images, listType);
 
@@ -1676,11 +1744,11 @@ async function renderFacebookExportCanvas(items, listType) {
   const logoImg = await loadImage("data:image/svg+xml;charset=utf-8," + encodeURIComponent(LOGO_SVG));
   ctx.save();
   ctx.globalAlpha = 0.6;
-  ctx.font = "bold 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  ctx.font = "bold 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
   const wmText = "Yoworld Price Guide";
-  const wmIcon = 18, wmGap = 6;
+  const wmIcon = 22, wmGap = 6;
   const textW = ctx.measureText(wmText).width;
   const iconW = logoImg ? wmIcon + wmGap : 0;
   const wmX = canvas.width - 16 - (iconW + textW);
@@ -1696,11 +1764,9 @@ async function exportListAsFacebookPNG(items, getFilename, btn, selection, listT
   if (!items.length) return;
   trackEvent("export_facebook_image", { list_type: listType, item_count: items.length });
 
-  const fbSettings = loadFBPostItemCount();
-  const gridMax = fbSettings.count;
   const chunks = [];
-  for (let i = 0; i < items.length; i += gridMax) {
-    chunks.push(items.slice(i, i + gridMax));
+  for (let i = 0; i < items.length; i += FB_POST_MAX_ITEMS) {
+    chunks.push(items.slice(i, i + FB_POST_MAX_ITEMS));
   }
 
   const originalHTML = btn.innerHTML;
@@ -1744,7 +1810,7 @@ function renderExportControls(listType, filtered) {
   }
   if (exportStatus) {
     if (sel.size) {
-      const perPage = loadExportItemCount().count;
+      const perPage = paintboardMode[listType] === "facebook" ? FB_POST_MAX_ITEMS : loadExportItemCount().count;
       const pngCount = Math.ceil(sel.size / perPage);
       exportStatus.textContent = `${sel.size} selected · exports as ${pngCount} PNG${pngCount > 1 ? "s" : ""}`;
     } else {
@@ -1777,11 +1843,11 @@ async function renderExportPreview(listType) {
   frame.style.visibility = "visible";
 
   const isFacebook = paintboardMode[listType] === "facebook";
-  const fbSettings = isFacebook ? loadFBPostItemCount() : null;
-  const gridMax = isFacebook ? fbSettings.count : loadExportItemCount().count;
-  const W = isFacebook ? (FB_POST_BASE_W * (fbSettings.cols / 5)) : 390;
-  const H = isFacebook ? (100 + fbSettings.rows * 216 + (fbSettings.rows - 1) * fbSettings.rowGap) : 260;
+  const gridMax = isFacebook ? FB_POST_MAX_ITEMS : loadExportItemCount().count;
   const slots = selected.slice(0, gridMax);
+  const fbLayout = isFacebook ? fbPostLayout(slots.length) : null;
+  const W = isFacebook ? fbLayout.width : 390;
+  const H = isFacebook ? fbPostHeight(fbLayout.rows) : 260;
   const images = await Promise.all(slots.map(i => i ? loadItemImageDataUrl(i.id) : null));
   const bodyHtml = isFacebook ? buildFacebookPreviewHtml(slots, images, listType) : buildBoardHtml(slots, images, listType);
   frame.srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0">${bodyHtml}</body></html>`;
@@ -1803,21 +1869,37 @@ async function renderExportPreview(listType) {
 // Theme/font/item-count are shared, global export settings — but the
 // picker controls are duplicated on both the Buy and Sell tabs, so keep
 // both copies of the UI in sync with whichever one was last changed.
-function syncSwatchPicker(listType, idPrefix, title, options, current, action, dataKey, tintButton = true) {
+function syncSwatchPicker(listType, idPrefix, title, options, current, action, dataKey, tintButton = true, customKind = null) {
   const btn = document.getElementById(`${idPrefix}-btn-${listType}`);
   if (btn && tintButton) btn.style.background = current.swatch;
   const menu = document.getElementById(`${idPrefix}-menu-${listType}`);
   if (menu) {
+    const allOptions = customKind
+      ? [...options, { key: "custom", label: "Custom", swatch: loadCustomHex(customKind) }]
+      : options;
     menu.innerHTML = `
       <div class="bg-picker-menu-title">${title}</div>
-      ${options.map(o => `
+      ${allOptions.map(o => `
         <button class="bg-swatch-option ${current.key === o.key ? "active" : ""}" data-action="${action}" data-${dataKey}="${o.key}">
           <span class="bg-swatch-dot" style="background:${o.swatch}"></span>
           <span class="bg-swatch-label">${o.label}</span>
         </button>
       `).join("")}
+      ${customKind ? customColourHtml(customKind) : ""}
     `;
   }
+}
+
+function customColourHtml(kind) {
+  const hex = loadCustomHex(kind);
+  return `
+    <div class="custom-colour">
+      <div class="custom-colour-title">Custom colour</div>
+      <div class="custom-colour-row">
+        <input type="color" class="custom-colour-picker" data-action="set-custom-colour" data-kind="${kind}" value="${hex}">
+        <input type="text" class="custom-colour-hex" maxlength="7" data-action="set-custom-hex" data-kind="${kind}" placeholder="#RRGGBB" value="${hex}">
+      </div>
+    </div>`;
 }
 
 // The Paintboard button opens and closes the sidebar, keeping the chosen format
@@ -1893,9 +1975,9 @@ function updateToolRows(listType) {
 }
 
 function syncExportPickers(listType) {
-  syncSwatchPicker(listType, "export-background", "Background", EXPORT_BACKGROUNDS, loadExportBackground(), "set-export-background", "background", false);
-  syncSwatchPicker(listType, "export-badge-color", "Badge Colour", EXPORT_BADGE_COLORS, loadExportBadgeColor(), "set-export-badge-color", "badgecolor", false);
-  syncSwatchPicker(listType, "export-effect", "Glow", EXPORT_CARD_EFFECTS, loadExportCardEffect(), "set-export-effect", "effect", false);
+  syncSwatchPicker(listType, "export-background", "Background", EXPORT_BACKGROUNDS, loadExportBackground(), "set-export-background", "background", false, "background");
+  syncSwatchPicker(listType, "export-badge-color", "Badge Colour", EXPORT_BADGE_COLORS, loadExportBadgeColor(), "set-export-badge-color", "badgecolor", false, "badgecolor");
+  syncSwatchPicker(listType, "export-effect", "Glow", EXPORT_CARD_EFFECTS, loadExportCardEffect(), "set-export-effect", "effect", false, "effect");
 
   const exportBorder = loadExportBorder();
   const borderMenu = document.getElementById(`export-border-menu-${listType}`);
@@ -1927,6 +2009,9 @@ function syncExportPickers(listType) {
       <button class="font-option ${exportCount.count === o.count ? "active" : ""}" data-action="set-export-count" data-count="${o.count}">${o.count} items</button>
     `).join("");
   }
+
+  const titleInput = document.getElementById(`export-title-input-${listType}`);
+  if (titleInput && document.activeElement !== titleInput) titleInput.value = getExportTitle(listType);
 
   const showBadgeCheckbox = document.getElementById(`export-show-badge-${listType}`);
   if (showBadgeCheckbox) showBadgeCheckbox.checked = loadExportShowBadge();
@@ -3023,6 +3108,18 @@ document.addEventListener("change", e => {
     const listType = e.target.name.replace("-sort-option", "");
     saveSortOption(listType, e.target.value);
     renderAll();
+  }
+  if (e.target.dataset.action === "set-export-title") {
+    setExportTitle(e.target.dataset.list, e.target.value);
+  }
+  if (e.target.dataset.action === "set-custom-colour") {
+    applyCustomHex(e.target.dataset.kind, e.target.value);
+  }
+  if (e.target.dataset.action === "set-custom-hex") {
+    let hex = e.target.value.trim();
+    if (/^[0-9a-f]{6}$/i.test(hex)) hex = "#" + hex;
+    if (HEX_RE.test(hex)) applyCustomHex(e.target.dataset.kind, hex);
+    else e.target.classList.add("invalid");
   }
   if (e.target.dataset.action === "set-buy-offer") {
     setOfferPrice("buy", Number(e.target.dataset.id), e.target.value);

@@ -1368,6 +1368,7 @@ function tileStyleBlock(theme, { badgeSize, nameSize, priceSize, tilePad = 2, pr
         position: relative;
         flex: 1;
         min-height: 0;
+        margin-bottom: 12px; /* trims the image rectangle slightly */
         background: transparent;
         border: ${theme.tileBorderOn === false ? "none" : `1px solid ${theme.tileBorder}`};
         box-shadow: ${theme.tileGlow ?? "none"};
@@ -1628,16 +1629,16 @@ function buildFacebookHtml(items, imgSrcs, listType) {
       }
       .fb-title-wrapper {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         margin-bottom: 28px;
         flex-shrink: 0;
       }
       .fb-title {
-        font-size: 52px;
+        font-size: 40px;
         font-weight: 800;
         color: ${theme.nameColor};
-        text-align: left;
+        text-align: center;
         flex: 1;
       }
       .fb-grid {
@@ -1751,7 +1752,7 @@ async function renderFacebookExportCanvas(items, listType) {
   const wmIcon = 22, wmGap = 6;
   const textW = ctx.measureText(wmText).width;
   const iconW = logoImg ? wmIcon + wmGap : 0;
-  const wmX = canvas.width - 16 - (iconW + textW);
+  const wmX = (canvas.width - (iconW + textW)) / 2;
   const wmMid = canvas.height - 14 - wmIcon / 2;
   if (logoImg) ctx.drawImage(logoImg, wmX, wmMid - wmIcon / 2, wmIcon, wmIcon);
   ctx.fillStyle = "#6b7280";
@@ -1942,6 +1943,9 @@ function syncPaintboardMode(listType) {
   // FB posts set their own item count, so the per-board count doesn't apply
   const countPicker = document.getElementById(`export-count-picker-${listType}`);
   if (countPicker) countPicker.classList.toggle("hidden", mode === "facebook");
+  // The title only appears on FB posts, so it is hidden for the Paintboard
+  const titleField = document.getElementById(`export-title-input-${listType}`)?.closest(".export-title-field");
+  if (titleField) titleField.classList.toggle("hidden", mode !== "facebook");
   const formatRadio = document.querySelector(`input[name="export-format-${listType}"][value="${mode}"]`);
   if (formatRadio) formatRadio.checked = true;
   if (tab) tab.classList.toggle("paintboard-active", active);
@@ -3098,6 +3102,14 @@ function applySettings(s) {
   document.documentElement.style.setProperty("--content-width", `${SIZE_WIDTHS[s.size] ?? 960}px`);
 }
 
+// Title updates the preview as you type, not only when the box loses focus
+document.addEventListener("input", e => {
+  if (e.target.dataset.action === "set-export-title") {
+    setExportTitle(e.target.dataset.list, e.target.value);
+    renderExportPreview(e.target.dataset.list);
+  }
+});
+
 document.addEventListener("change", e => {
   if (e.target.dataset.action === "set-export-format") {
     paintboardFormat[e.target.dataset.list] = e.target.value;
@@ -3111,6 +3123,7 @@ document.addEventListener("change", e => {
   }
   if (e.target.dataset.action === "set-export-title") {
     setExportTitle(e.target.dataset.list, e.target.value);
+    renderExportPreview(e.target.dataset.list);
   }
   if (e.target.dataset.action === "set-custom-colour") {
     applyCustomHex(e.target.dataset.kind, e.target.value);

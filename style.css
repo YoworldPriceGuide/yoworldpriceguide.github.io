@@ -2443,6 +2443,16 @@ body.dark .category-filter-option:hover {
   color: var(--muted);
 }
 
+/* In the sidebar, line the title box up with the full-width tool rows below it */
+.paintboard-bar .export-title-field {
+  padding: 0;
+  width: 100%;
+}
+
+.export-title-field.hidden {
+  display: none;
+}
+
 .export-title-input {
   width: 100%;
   height: 28px;

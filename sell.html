@@ -210,6 +210,10 @@
           <button class="paintboard-expand-btn" data-action="toggle-paintboard-buy" title="Expand export">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
+          <div class="export-title-field">
+            <label for="export-title-input-buy">Title</label>
+            <input type="text" id="export-title-input-buy" class="export-title-input" maxlength="40" placeholder="Want to Buy" data-action="set-export-title" data-list="buy" />
+          </div>
           <div class="bg-picker">
             <button id="bulk-card-bg-btn-buy" class="bg-swatch-main" data-action="toggle-bg-picker" title="Bulk edit card backgrounds">C</button>
             <div id="bulk-card-bg-menu-buy" class="bg-picker-menu bg-picker-menu--list hidden"></div>
@@ -251,10 +255,6 @@
                 <input type="checkbox" id="export-show-badge-buy" data-action="set-export-show-badge" />
                 Show buy/sell badge
               </label>
-              <div class="export-title-field">
-                <label for="export-title-input-buy">Export title</label>
-                <input type="text" id="export-title-input-buy" class="export-title-input" maxlength="40" data-action="set-export-title" data-list="buy" />
-              </div>
             </div>
           </div>
           <div class="paintboard-footer">
@@ -361,6 +361,10 @@
           <button class="paintboard-expand-btn" data-action="toggle-paintboard-sell" title="Expand export">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
+          <div class="export-title-field">
+            <label for="export-title-input-sell">Title</label>
+            <input type="text" id="export-title-input-sell" class="export-title-input" maxlength="40" placeholder="Want to Sell" data-action="set-export-title" data-list="sell" />
+          </div>
           <div class="bg-picker">
             <button id="bulk-card-bg-btn-sell" class="bg-swatch-main" data-action="toggle-bg-picker" title="Bulk edit card backgrounds">C</button>
             <div id="bulk-card-bg-menu-sell" class="bg-picker-menu bg-picker-menu--list hidden"></div>
@@ -402,10 +406,6 @@
                 <input type="checkbox" id="export-show-badge-sell" data-action="set-export-show-badge" />
                 Show buy/sell badge
               </label>
-              <div class="export-title-field">
-                <label for="export-title-input-sell">Export title</label>
-                <input type="text" id="export-title-input-sell" class="export-title-input" maxlength="40" data-action="set-export-title" data-list="sell" />
-              </div>
             </div>
           </div>
           <div class="paintboard-footer">

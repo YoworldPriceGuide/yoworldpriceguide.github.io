@@ -2384,9 +2384,8 @@ body.dark .category-filter-option:hover {
 
 /* ── CUSTOM COLOUR ── */
 .custom-colour {
-  border-top: 1px solid var(--border);
-  margin-top: 6px;
-  padding: 8px 10px 10px;
+  margin-top: 0;
+  padding: 4px 10px 10px;
 }
 
 .custom-colour-title {

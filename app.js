@@ -435,14 +435,23 @@ let currentDetailId = null;
 let currentDetailName = "";
 let detailApprovedLogs = [];
 let sparklineCurrency = 1;
+// Coin min/max use the Supabase min/max only when an item has more logged prices than this.
+const SEARCH_RANGE_MIN_LOGS = 25;
 
-// Coin min/max = Supabase prices table aggregate only (not the user's own logs or approved community logs)
+// Coin min/max: lowest/highest logged price (user checks + approved community logs).
+// The Supabase aggregate only takes over once there are more than SEARCH_RANGE_MIN_LOGS logs.
 function computeDetailCoinRange(entry) {
-  const latest = (entry?.supabasePrices ?? []).at(-1);
-  if (!latest) return null;
-  const min = latest.min > 0 ? latest.min : null;
-  const max = latest.max > 0 ? latest.max : null;
-  return (min != null || max != null) ? { min, max } : null;
+  const logCoins = [
+    ...(entry?.pricechecks ?? []).filter(p => p.currency === 1).map(p => p.price),
+    ...detailApprovedLogs.map(l => l.price),
+  ].filter(v => v > 0);
+  let coins = logCoins;
+  if (logCoins.length > SEARCH_RANGE_MIN_LOGS) {
+    const latest = (entry?.supabasePrices ?? []).at(-1);
+    coins = [latest?.min, latest?.max].filter(v => v > 0);
+  }
+  if (!coins.length) return null;
+  return { min: Math.min(...coins), max: Math.max(...coins) };
 }
 const submitBlockedToday = new Map();
 let buyPage  = 1;
@@ -566,6 +575,9 @@ function removePricecheck(itemId, index) {
 
 // In-memory store for search results (keyed by id) so buttons can look up by id
 let searchResultsMap = {};
+// The current page of results, in the order they were searched. searchResultsMap is keyed by
+// id, so its values come back in id order and can't be used to redraw the list in place.
+let currentSearchResults = [];
 
 // ── Storage ────────────────────────────────────────────────────
 function loadBuyList() {
@@ -923,12 +935,15 @@ function loadFBCategoryHeadings() {
   return false;
 }
 
-function loadExportShowBadge() {
-  return localStorage.getItem("exportShowBadge") === "true";
+// Which label shows on each item: none, Buying/Selling, or Instore
+function loadExportBadgeMode() {
+  const saved = localStorage.getItem("exportBadgeMode");
+  if (saved) return saved;
+  return localStorage.getItem("exportShowBadge") === "true" ? "buysell" : "none"; // keeps the old checkbox setting
 }
 
-function setExportShowBadge(show) {
-  localStorage.setItem("exportShowBadge", String(show));
+function setExportBadgeMode(mode) {
+  localStorage.setItem("exportBadgeMode", mode);
   renderAll();
 }
 
@@ -1112,7 +1127,11 @@ function searchResultCard(item) {
   const pcCoins = (entry?.pricechecks ?? []).filter(p => p.currency === 1).map(p => p.price);
   const communityCoins = (entry?.supabasePrices ?? []).flatMap(p => [p.min, p.max]).filter(v => v > 0);
   const approvedLogCoins = (entry?.approvedLogPrices ?? []).filter(v => v > 0);
-  const allCoins = [...pcCoins, ...communityCoins, ...approvedLogCoins];
+  // Logged prices (user checks + approved community logs). The Supabase min/max only takes over once there are enough logs to trust it.
+  const logCoins = [...pcCoins, ...approvedLogCoins];
+  const allCoins = logCoins.length > SEARCH_RANGE_MIN_LOGS
+    ? [...logCoins, ...communityCoins]
+    : logCoins;
   let priceRange = "";
   if (allCoins.length) {
     const lo = Math.min(...allCoins), hi = Math.max(...allCoins);
@@ -1309,15 +1328,17 @@ function resolveBadgeColors(theme, listType, isWhiteBg) {
   };
 }
 
-function boardCellHtml(item, imgDataUrl, listType, theme, showBadge) {
+function boardCellHtml(item, imgDataUrl, listType, theme, badgeMode) {
   // Empty slots still reserve the same .name/.price space as filled ones so
   // every .tile (flex: 1) in the grid comes out the same height.
   if (!item) return `<div class="cell"><div class="tile tile--empty"></div><div class="name"></div><div class="price"></div></div>`;
-  const badgeLabel = listType === "sell" ? "Selling" : "Buying";
+  // Buying/Selling label, or Instore for items in the store. Discontinued items get no label.
+  const badgeLabel = badgeMode === "buysell" ? (listType === "sell" ? "Selling" : "Buying")
+    : badgeMode === "instore" && item.activeInStore ? "Instore" : "";
   const priceLabel = item.offerPrice ? escapeHtml(String(item.offerPrice)) : "";
   const bgColor = item.bgColor !== undefined ? item.bgColor : CARD_BG_DEFAULT;
   const { bg: badgeBg, text: badgeText } = resolveBadgeColors(theme, listType, bgColor === "#ffffff");
-  const badgeHtml = showBadge ? `<div class="badge" style="background:${badgeBg};color:${badgeText}">${badgeLabel}</div>` : "";
+  const badgeHtml = badgeLabel ? `<div class="badge" style="background:${badgeBg};color:${badgeText}">${badgeLabel}</div>` : "";
   return `
     <div class="cell">
       <div class="tile" style="background:${bgColor}">
@@ -1409,12 +1430,12 @@ function buildBoardHtml(items, imgSrcs, listType) {
   const font = loadExportFont();
   const { cols, rows, badgeSize, nameSize, priceSize, rowGap } = loadExportItemCount();
   const gridMax = cols * rows;
-  const showBadge = loadExportShowBadge();
+  const badgeMode = loadExportBadgeMode();
   const W = 390, H = 260;
 
   const cells = [];
   for (let idx = 0; idx < gridMax; idx++) {
-    cells.push(boardCellHtml(items[idx] ?? null, imgSrcs[idx] ?? null, listType, theme, showBadge));
+    cells.push(boardCellHtml(items[idx] ?? null, imgSrcs[idx] ?? null, listType, theme, badgeMode));
   }
 
   return `
@@ -1445,7 +1466,7 @@ function buildFacebookPreviewHtml(items, imgSrcs, listType) {
   const font = loadExportFont();
   const layout = fbPostLayout(items.length);
   const gridMax = layout.cols * layout.rows;
-  const showBadge = loadExportShowBadge();
+  const badgeMode = loadExportBadgeMode();
   const title = getExportTitle(listType);
 
   const FB_POST_W = layout.width;
@@ -1454,7 +1475,7 @@ function buildFacebookPreviewHtml(items, imgSrcs, listType) {
 
   const cells = [];
   for (let idx = 0; idx < gridMax; idx++) {
-    cells.push(boardCellHtml(items[idx] ?? null, imgSrcs[idx] ?? null, listType, theme, showBadge));
+    cells.push(boardCellHtml(items[idx] ?? null, imgSrcs[idx] ?? null, listType, theme, badgeMode));
   }
 
   const gridTemplateRows = `repeat(${layout.rows}, ${FB_POST_CELL_H}px)`;
@@ -1501,7 +1522,7 @@ function buildFacebookHtml(items, imgSrcs, listType) {
   const font = loadExportFont();
   const layout = fbPostLayout(items.length);
   const gridMax = layout.cols * layout.rows;
-  const showBadge = loadExportShowBadge();
+  const badgeMode = loadExportBadgeMode();
   const title = getExportTitle(listType);
   const showHeadings = loadFBCategoryHeadings();
 
@@ -1542,19 +1563,19 @@ function buildFacebookHtml(items, imgSrcs, listType) {
       for (const item of categoryItems) {
         if (itemIdx < gridMax) {
           const imgSrc = imgSrcs[items.indexOf(item)] ?? null;
-          cells.push(boardCellHtml(item, imgSrc, listType, theme, showBadge));
+          cells.push(boardCellHtml(item, imgSrc, listType, theme, badgeMode));
           itemIdx++;
         }
       }
     }
 
     while (itemIdx < gridMax) {
-      cells.push(boardCellHtml(null, null, listType, theme, showBadge));
+      cells.push(boardCellHtml(null, null, listType, theme, badgeMode));
       itemIdx++;
     }
   } else {
     for (let idx = 0; idx < gridMax; idx++) {
-      cells.push(boardCellHtml(items[idx] ?? null, imgSrcs[idx] ?? null, listType, theme, showBadge));
+      cells.push(boardCellHtml(items[idx] ?? null, imgSrcs[idx] ?? null, listType, theme, badgeMode));
     }
   }
 
@@ -1845,19 +1866,20 @@ function syncSwatchPicker(listType, idPrefix, title, options, current, action, d
   if (btn && tintButton) btn.style.background = current.swatch;
   const menu = document.getElementById(`${idPrefix}-menu-${listType}`);
   if (menu) {
-    const allOptions = customKind
-      ? [...options, { key: "custom", label: "Custom", swatch: loadCustomHex(customKind) }]
-      : options;
-    // The custom colour picker goes at the top so it's visible without scrolling the list
+    const optionRow = o => `
+      <button class="bg-swatch-option ${current.key === o.key ? "active" : ""}" data-action="${action}" data-${dataKey}="${o.key}">
+        <span class="bg-swatch-dot" style="background:${o.swatch}"></span>
+        <span class="bg-swatch-label">${o.label}</span>
+      </button>`;
+    // Custom colour is the last row, with its picker and hex box directly under it
+    const customRow = customKind
+      ? optionRow({ key: "custom", label: "Custom colour", swatch: loadCustomHex(customKind) }) +
+        customColourHtml(customKind, current.key === "custom")
+      : "";
     menu.innerHTML = `
       <div class="bg-picker-menu-title">${title}</div>
-      ${customKind ? customColourHtml(customKind, current.key === "custom") : ""}
-      ${allOptions.map(o => `
-        <button class="bg-swatch-option ${current.key === o.key ? "active" : ""}" data-action="${action}" data-${dataKey}="${o.key}">
-          <span class="bg-swatch-dot" style="background:${o.swatch}"></span>
-          <span class="bg-swatch-label">${o.label}</span>
-        </button>
-      `).join("")}
+      ${options.map(optionRow).join("")}
+      ${customRow}
     `;
   }
 }
@@ -1866,7 +1888,6 @@ function customColourHtml(kind, isActive = false) {
   const hex = loadCustomHex(kind);
   return `
     <div class="custom-colour ${isActive ? "active" : ""}">
-      <div class="custom-colour-title">Custom colour</div>
       <div class="custom-colour-row">
         <input type="color" class="custom-colour-picker" data-action="set-custom-colour" data-kind="${kind}" value="${hex}">
         <input type="text" class="custom-colour-hex" maxlength="7" data-action="set-custom-hex" data-kind="${kind}" placeholder="#RRGGBB" value="${hex}">
@@ -1988,8 +2009,7 @@ function syncExportPickers(listType) {
   const titleInput = document.getElementById(`export-title-input-${listType}`);
   if (titleInput && document.activeElement !== titleInput) titleInput.value = getExportTitle(listType);
 
-  const showBadgeCheckbox = document.getElementById(`export-show-badge-${listType}`);
-  if (showBadgeCheckbox) showBadgeCheckbox.checked = loadExportShowBadge();
+  document.querySelectorAll(`input[name="export-badge-${listType}"]`).forEach(r => { r.checked = r.value === loadExportBadgeMode(); });
 
   const bulkCardBgMenu = document.getElementById(`bulk-card-bg-menu-${listType}`);
   if (bulkCardBgMenu) {
@@ -2064,8 +2084,8 @@ function renderAll() {
 
   // Re-render search results to update watch button states
   const resultsEl = document.getElementById("search-results");
-  if (resultsEl && Object.keys(searchResultsMap).length) {
-    renderSearchCards(resultsEl, Object.values(searchResultsMap));
+  if (resultsEl && currentSearchResults.length) {
+    renderSearchCards(resultsEl, currentSearchResults);
   }
 
 }
@@ -2162,6 +2182,7 @@ async function fetchSearchPage(query, page) {
 async function doSearch(query, page = 1) {
   const resultsEl = document.getElementById("search-results");
   searchResultsMap = {};
+  currentSearchResults = [];
 
   if (!query.trim()) {
     resultsEl.innerHTML = "";
@@ -2189,6 +2210,7 @@ async function doSearch(query, page = 1) {
     }
 
     items.forEach(item => { searchResultsMap[item.id] = item; });
+    currentSearchResults = items;
     renderSearchCards(resultsEl, items);
     renderSearchPagination();
 
@@ -2285,7 +2307,7 @@ document.addEventListener("click", (e) => {
   if (btn.dataset.action === "set-export-border") setExportBorder(btn.dataset.border);
   if (btn.dataset.action === "set-export-font") setExportFont(btn.dataset.font);
   if (btn.dataset.action === "set-export-count") setExportItemCount(Number(btn.dataset.count));
-  if (btn.dataset.action === "set-export-show-badge") setExportShowBadge(btn.checked);
+  if (btn.dataset.action === "set-export-badge-mode") setExportBadgeMode(btn.value);
 
   if (btn.dataset.action === "dismiss-submit-reminder") {
     localStorage.setItem("submitReminderDismissedDate", new Date().toISOString().split("T")[0]);

@@ -2404,15 +2404,37 @@ body.dark .category-filter-option:hover {
   gap: 8px;
 }
 
+/* Borderless circle, like the other colour options */
 .custom-colour-picker {
-  width: 32px;
+  width: 28px;
   height: 28px;
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--surface);
+  border: none;
+  border-radius: 50%;
+  background: none;
   cursor: pointer;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.custom-colour-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.custom-colour-picker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.custom-colour-picker::-moz-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* Hover shows the custom colour is available; a permanent ring shows it is picked */
+.custom-colour-picker:hover,
+.custom-colour.active .custom-colour-picker {
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--purple);
 }
 
 .custom-colour-hex {

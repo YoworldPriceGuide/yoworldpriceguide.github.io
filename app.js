@@ -691,64 +691,38 @@ const CARD_BG_OPTIONS = [
 // Background, badge colour, and card effect are independent axes so any
 // combination can be mixed and matched, rather than one bundled "theme".
 const EXPORT_BACKGROUNDS = [
-  // Plain Colors (9)
-  { key: "white", label: "White", swatch: "#ffffff", pageBg: "#ffffff", tileBg: "transparent", tileBorder: "#d8d8d8", nameColor: "#374151", priceColor: "#000000" },
-  { key: "light-grey", label: "Light Grey", swatch: "#f3f4f6", pageBg: "#f3f4f6", tileBg: "transparent", tileBorder: "#d1d5db", nameColor: "#1f2937" },
-  { key: "cream", label: "Cream", swatch: "#fefdf8", pageBg: "#fefdf8", tileBg: "transparent", tileBorder: "#fde68a", nameColor: "#78350f" },
-  { key: "baby-pink", label: "Baby Pink", swatch: "#fce7f3", pageBg: "#fce7f3", tileBg: "transparent", tileBorder: "#f472b6", nameColor: "#831843" },
-  { key: "soft-peach", label: "Soft Peach", swatch: "#fed7aa", pageBg: "#fed7aa", tileBg: "transparent", tileBorder: "#fb923c", nameColor: "#7c2d12" },
-  { key: "baby-blue", label: "Baby Blue", swatch: "#cffafe", pageBg: "#cffafe", tileBg: "transparent", tileBorder: "#06b6d4", nameColor: "#164e63" },
-  { key: "mint-green", label: "Mint Green", swatch: "#ccfbf1", pageBg: "#ccfbf1", tileBg: "transparent", tileBorder: "#14b8a6", nameColor: "#134e4a" },
-  { key: "lavender", label: "Lavender", swatch: "#e9d5ff", pageBg: "#e9d5ff", tileBg: "transparent", tileBorder: "#a855f7", nameColor: "#581c87" },
-  { key: "soft-yellow", label: "Soft Yellow", swatch: "#fef3c7", pageBg: "#fef3c7", tileBg: "transparent", tileBorder: "#eab308", nameColor: "#713f12" },
-  { key: "dark-mode", label: "Dark Mode", swatch: "#0f172a", pageBg: "#0f172a", tileBg: "transparent", tileBorder: "#475569", nameColor: "#f1f5f9" },
-
-  // Gradient Styles (10) - Soft pastel gradients
-  { key: "starlight", label: "Starlight", swatch: "#d080c0", pageBg: "linear-gradient(135deg, #f5a0a0 0%, #d080c0 25%, #7080d0 50%, #5070c0 75%, #2050a0 100%)", tileBg: "transparent", tileBorder: "#c070b0", nameColor: "#3a1f4f" },
-  { key: "candy-floss", label: "Candy Floss", swatch: "#d0a8d8", pageBg: "linear-gradient(135deg, #c0d8f0 0%, #d0a8e8 25%, #e0a0e0 50%, #f0a0d8 75%, #f0b0c8 100%)", tileBg: "transparent", tileBorder: "#c0a8c8", nameColor: "#4a3a5a" },
-  { key: "twilight", label: "Twilight", swatch: "#6070b0", pageBg: "linear-gradient(135deg, #a080d8 0%, #7060c0 25%, #5070a0 50%, #2050a0 75%, #0a1a70 100%)", tileBg: "transparent", tileBorder: "#5060a0", nameColor: "#1a0a4a" },
-  { key: "sunrise", label: "Sunrise", swatch: "#ff7fa0", pageBg: "linear-gradient(135deg, #ffa080 0%, #ff9090 25%, #ff7fa0 50%, #ff70b0 75%, #ff60c0 100%)", tileBg: "transparent", tileBorder: "#ff6f90", nameColor: "#6a2a3a" },
-  { key: "peach-dream", label: "Peach Dream", swatch: "#e8a8d8", pageBg: "linear-gradient(135deg, #ffc8b0 0%, #f0b8d0 25%, #e8a8d8 50%, #d0a0d8 75%, #c0a0d0 100%)", tileBg: "transparent", tileBorder: "#d89ac8", nameColor: "#5a3a5a" },
-  { key: "mint-dream", label: "Mint Dream", swatch: "#b0e0e8", pageBg: "linear-gradient(135deg, #c0f0e0 0%, #b8e8e0 25%, #b0e0e8 50%, #a8d8f0 75%, #a0d0f8 100%)", tileBg: "transparent", tileBorder: "#a0d0d8", nameColor: "#2a4a5a" },
-  { key: "rose-garden", label: "Rose Garden", swatch: "#e8a0d8", pageBg: "linear-gradient(135deg, #f8b0d0 0%, #f0a8d0 25%, #e8a0d8 50%, #e098d0 75%, #d890c8 100%)", tileBg: "transparent", tileBorder: "#d89ac8", nameColor: "#5a2a4a" },
-  { key: "coral-sunset", label: "Coral Sunset", swatch: "#ffc870", pageBg: "linear-gradient(135deg, #ffa090 0%, #ffb880 25%, #ffc870 50%, #ffd860 75%, #ffe850 100%)", tileBg: "transparent", tileBorder: "#ffb860", nameColor: "#6a3a1a" },
+  // Background colours (first is the default)
+  { key: "light-grey", label: "Light grey", swatch: "#f3f4f6", pageBg: "#f3f4f6", tileBg: "transparent", tileBorder: "#d1d5db" },
+  // nameColor: item names switch to a light shade on dark backgrounds so they stay readable
+  { key: "dark-grey", label: "Dark grey", swatch: "#4b5563", pageBg: "#4b5563", tileBg: "transparent", tileBorder: "#374151", nameColor: "#f3f4f6" },
+  { key: "white", label: "White", swatch: "#ffffff", pageBg: "#ffffff", tileBg: "transparent", tileBorder: "#d8d8d8" },
+  { key: "cream", label: "Cream", swatch: "#fdf6e3", pageBg: "#fdf6e3", tileBg: "transparent", tileBorder: "#e7d9b0" },
+  { key: "baby-pink", label: "Baby pink", swatch: "#fce7f3", pageBg: "#fce7f3", tileBg: "transparent", tileBorder: "#f472b6" },
+  { key: "baby-blue", label: "Baby blue", swatch: "#cffafe", pageBg: "#cffafe", tileBg: "transparent", tileBorder: "#06b6d4" },
+  { key: "baby-green", label: "Baby green", swatch: "#d1fae5", pageBg: "#d1fae5", tileBg: "transparent", tileBorder: "#10b981" },
+  { key: "baby-yellow", label: "Baby yellow", swatch: "#fef9c3", pageBg: "#fef9c3", tileBg: "transparent", tileBorder: "#eab308" },
 ];
 
 const EXPORT_BADGE_COLORS = [
-  { key: "black-badge", label: "Black", swatch: "#000000", badgeBg: "#e5e7eb", badgeText: "#000000" },
-  // Plain Color Badges (9)
-  { key: "white-badge", label: "White", swatch: "#6b7280", badgeBg: "#f3f4f6", badgeText: "#6b7280" },
-  { key: "light-grey-badge", label: "Light Grey", swatch: "#374151", badgeBg: "#e5e7eb", badgeText: "#374151" },
-  { key: "cream-badge", label: "Cream", swatch: "#78350f", badgeBg: "#fef3c7", badgeText: "#78350f" },
-  { key: "baby-pink-badge", label: "Baby Pink", swatch: "#be185d", badgeBg: "#fce7f3", badgeText: "#be185d" },
-  { key: "soft-peach-badge", label: "Soft Peach", swatch: "#b45309", badgeBg: "#fed7aa", badgeText: "#b45309" },
-  { key: "baby-blue-badge", label: "Baby Blue", swatch: "#0369a1", badgeBg: "#cffafe", badgeText: "#0369a1" },
-  { key: "mint-green-badge", label: "Mint Green", swatch: "#0d7377", badgeBg: "#ccfbf1", badgeText: "#0d7377" },
-  { key: "lavender-badge", label: "Lavender", swatch: "#6b21a8", badgeBg: "#e9d5ff", badgeText: "#6b21a8" },
-  { key: "soft-yellow-badge", label: "Soft Yellow", swatch: "#ca8a04", badgeBg: "#fef3c7", badgeText: "#ca8a04" },
-  { key: "dark-mode-badge", label: "Dark Mode", swatch: "#e2e8f0", badgeBg: "#1e293b", badgeText: "#e2e8f0" },
-
-  // Gradient Color Badges (10)
-  { key: "starlight-badge", label: "Starlight", swatch: "#5a2a5a", badgeBg: "#e8d0e0", badgeText: "#5a2a5a" },
-  { key: "candy-floss-badge", label: "Candy Floss", swatch: "#5a4a6a", badgeBg: "#e8dfe8", badgeText: "#5a4a6a" },
-  { key: "twilight-badge", label: "Twilight", swatch: "#2a2a5a", badgeBg: "#c0c8e0", badgeText: "#2a2a5a" },
-  { key: "sunrise-badge", label: "Sunrise", swatch: "#6a2a3a", badgeBg: "#ffc8d8", badgeText: "#6a2a3a" },
-  { key: "peach-dream-badge", label: "Peach Dream", swatch: "#5a2a5a", badgeBg: "#f0d8e8", badgeText: "#5a2a5a" },
-  { key: "mint-dream-badge", label: "Mint Dream", swatch: "#1a4a5a", badgeBg: "#d8f0f8", badgeText: "#1a4a5a" },
-  { key: "rose-garden-badge", label: "Rose Garden", swatch: "#5a1a4a", badgeBg: "#f0d0e8", badgeText: "#5a1a4a" },
-  { key: "coral-sunset-badge", label: "Coral Sunset", swatch: "#6a3a1a", badgeBg: "#ffe8c0", badgeText: "#6a3a1a" },
+  // Text colours (first is the default). Sets item names, prices and the Buying/Selling badge
+  { key: "black-text", label: "Black", swatch: "#000000", nameColor: "#000000", priceColor: "#000000", badgeBg: "#e5e7eb", badgeText: "#000000" },
+  { key: "white-text", label: "White", swatch: "#ffffff", nameColor: "#ffffff", priceColor: "#ffffff", badgeBg: "#1f2937", badgeText: "#ffffff" },
+  { key: "brown-text", label: "Brown", swatch: "#78350f", nameColor: "#78350f", priceColor: "#78350f", badgeBg: "#f3e6d3", badgeText: "#78350f" },
+  { key: "pink-text", label: "Pink", swatch: "#db2777", nameColor: "#db2777", priceColor: "#db2777", badgeBg: "#fce7f3", badgeText: "#db2777" },
+  { key: "blue-text", label: "Blue", swatch: "#2563eb", nameColor: "#2563eb", priceColor: "#2563eb", badgeBg: "#dbeafe", badgeText: "#2563eb" },
+  { key: "green-text", label: "Green", swatch: "#16a34a", nameColor: "#16a34a", priceColor: "#16a34a", badgeBg: "#dcfce7", badgeText: "#16a34a" },
+  { key: "dark-yellow-text", label: "Dark yellow", swatch: "#a16207", nameColor: "#a16207", priceColor: "#a16207", badgeBg: "#fef9c3", badgeText: "#a16207" },
 ];
 
 const EXPORT_CARD_EFFECTS = [
+  // Glow colours (first is the default)
   { key: "none", label: "None", swatch: "transparent", tileGlow: "none", tileBorder: null },
-  { key: "glow-starlight", label: "Glow (Starlight)", swatch: "#d080c0", tileGlow: "0 0 8px 2px rgba(208,128,192,0.65), 0 0 18px 5px rgba(208,128,192,0.35), inset 0 0 10px rgba(208,128,192,0.2)", tileBorder: "#c070b0" },
-  { key: "glow-candy-floss", label: "Glow (Candy Floss)", swatch: "#e0b0e0", tileGlow: "0 0 8px 2px rgba(224,176,224,0.65), 0 0 18px 5px rgba(224,176,224,0.35), inset 0 0 10px rgba(224,176,224,0.2)", tileBorder: "#d0a0d0" },
-  { key: "glow-twilight", label: "Glow (Twilight)", swatch: "#6070c0", tileGlow: "0 0 8px 2px rgba(96,112,192,0.65), 0 0 18px 5px rgba(96,112,192,0.35), inset 0 0 10px rgba(96,112,192,0.2)", tileBorder: "#5060a0" },
-  { key: "glow-sunrise", label: "Glow (Sunrise)", swatch: "#ff7fa0", tileGlow: "0 0 8px 2px rgba(255,127,160,0.65), 0 0 18px 5px rgba(255,127,160,0.35), inset 0 0 10px rgba(255,127,160,0.2)", tileBorder: "#ff6f90" },
-  { key: "glow-peach-dream", label: "Glow (Peach Dream)", swatch: "#e8a8d8", tileGlow: "0 0 8px 2px rgba(232,168,216,0.65), 0 0 18px 5px rgba(232,168,216,0.35), inset 0 0 10px rgba(232,168,216,0.2)", tileBorder: "#d89ac8" },
-  { key: "glow-mint-dream", label: "Glow (Mint Dream)", swatch: "#b0e0e8", tileGlow: "0 0 8px 2px rgba(176,224,232,0.65), 0 0 18px 5px rgba(176,224,232,0.35), inset 0 0 10px rgba(176,224,232,0.2)", tileBorder: "#a0d0d8" },
-  { key: "glow-rose-garden", label: "Glow (Rose Garden)", swatch: "#e8a0d8", tileGlow: "0 0 8px 2px rgba(232,160,216,0.65), 0 0 18px 5px rgba(232,160,216,0.35), inset 0 0 10px rgba(232,160,216,0.2)", tileBorder: "#d89ac8" },
-  { key: "glow-coral-sunset", label: "Glow (Coral Sunset)", swatch: "#ffc870", tileGlow: "0 0 8px 2px rgba(255,200,112,0.65), 0 0 18px 5px rgba(255,200,112,0.35), inset 0 0 10px rgba(255,200,112,0.2)", tileBorder: "#ffb860" },
+  { key: "glow-white", label: "White", swatch: "#ffffff", tileGlow: "0 0 8px 2px rgba(255,255,255,0.65), 0 0 18px 5px rgba(255,255,255,0.35), inset 0 0 10px rgba(255,255,255,0.2)", tileBorder: "#ffffff" },
+  { key: "glow-beige", label: "Beige", swatch: "#d6c7a1", tileGlow: "0 0 8px 2px rgba(214,199,161,0.65), 0 0 18px 5px rgba(214,199,161,0.35), inset 0 0 10px rgba(214,199,161,0.2)", tileBorder: "#d6c7a1" },
+  { key: "glow-pink", label: "Pink", swatch: "#f472b6", tileGlow: "0 0 8px 2px rgba(244,114,182,0.65), 0 0 18px 5px rgba(244,114,182,0.35), inset 0 0 10px rgba(244,114,182,0.2)", tileBorder: "#f472b6" },
+  { key: "glow-blue", label: "Blue", swatch: "#06b6d4", tileGlow: "0 0 8px 2px rgba(6,182,212,0.65), 0 0 18px 5px rgba(6,182,212,0.35), inset 0 0 10px rgba(6,182,212,0.2)", tileBorder: "#06b6d4" },
+  { key: "glow-green", label: "Green", swatch: "#22c55e", tileGlow: "0 0 8px 2px rgba(34,197,94,0.65), 0 0 18px 5px rgba(34,197,94,0.35), inset 0 0 10px rgba(34,197,94,0.2)", tileBorder: "#22c55e" },
+  { key: "glow-yellow", label: "Yellow", swatch: "#facc15", tileGlow: "0 0 8px 2px rgba(250,204,21,0.65), 0 0 18px 5px rgba(250,204,21,0.35), inset 0 0 10px rgba(250,204,21,0.2)", tileBorder: "#facc15" },
 ];
 
 const EXPORT_BORDER_OPTIONS = [
@@ -799,7 +773,7 @@ function customBackgroundOption(hex) {
 }
 
 function customBadgeOption(hex) {
-  return { key: "custom", label: hex.toUpperCase(), swatch: hex, badgeBg: mixHex(hex, "#ffffff", 0.85), badgeText: hex };
+  return { key: "custom", label: hex.toUpperCase(), swatch: hex, nameColor: hex, priceColor: hex, badgeBg: mixHex(hex, "#ffffff", 0.85), badgeText: hex };
 }
 
 function customEffectOption(hex) {
@@ -816,7 +790,7 @@ function customEffectOption(hex) {
 function loadExportBackground() {
   const key = localStorage.getItem("exportBackground");
   if (key === "custom") return customBackgroundOption(loadCustomHex("background"));
-  return EXPORT_BACKGROUNDS.find(b => b.key === key) || EXPORT_BACKGROUNDS.find(b => b.key === "white");
+  return EXPORT_BACKGROUNDS.find(b => b.key === key) || EXPORT_BACKGROUNDS[0];
 }
 
 function setExportBackground(key) {
@@ -827,7 +801,7 @@ function setExportBackground(key) {
 function loadExportBadgeColor() {
   const key = localStorage.getItem("exportBadgeColor");
   if (key === "custom") return customBadgeOption(loadCustomHex("badgecolor"));
-  return EXPORT_BADGE_COLORS.find(b => b.key === key) || EXPORT_BADGE_COLORS.find(b => b.key === "black-badge");
+  return EXPORT_BADGE_COLORS.find(b => b.key === key) || EXPORT_BADGE_COLORS[0];
 }
 
 function setExportBadgeColor(key) {
@@ -860,19 +834,15 @@ function getExportStyle() {
     pageBg: bg.pageBg,
     tileBg: bg.tileBg,
     tileBorder: tileBorder,
-    nameColor: "#374151",
-    priceColor: bg.priceColor ?? badge.badgeText,
+    // Item names and the Buying/Selling badge keep their fixed look.
+    // Only the price (the free text under each item) uses the text colour.
+    nameColor: bg.nameColor ?? "#374151",
+    priceColor: badge.priceColor,
     tileGlow: effect.tileGlow,
     tileRadius: border.radius,
     tileBorderOn: border.hasBorder || (effect.tileGlow !== "none"),
-    badgeBg: badge.badgeBg,
-    badgeText: badge.badgeText,
-    badgeBgOnWhite: badge.badgeBgOnWhite,
-    badgeTextOnWhite: badge.badgeTextOnWhite,
-    sellBadgeBg: badge.sellBadgeBg,
-    sellBadgeText: badge.sellBadgeText,
-    sellBadgeBgOnWhite: badge.sellBadgeBgOnWhite,
-    sellBadgeTextOnWhite: badge.sellBadgeTextOnWhite,
+    badgeBg: "#e5e7eb",
+    badgeText: "#000000",
   };
 }
 
@@ -900,7 +870,7 @@ const EXPORT_COUNT_OPTIONS = [
 const FB_POST_COLS = [3, 4, 5, 6];
 const FB_POST_MAX_RATIO = 2;
 const FB_POST_MAX_ITEMS = 36;
-const FB_POST_CELL_H = 350;
+const FB_POST_CELL_H = 290;
 const FB_POST_ROW_GAP = 18;
 const FB_POST_FONTS = { badgeSize: 16, nameSize: 18, priceSize: 20 };
 
@@ -1878,23 +1848,24 @@ function syncSwatchPicker(listType, idPrefix, title, options, current, action, d
     const allOptions = customKind
       ? [...options, { key: "custom", label: "Custom", swatch: loadCustomHex(customKind) }]
       : options;
+    // The custom colour picker goes at the top so it's visible without scrolling the list
     menu.innerHTML = `
       <div class="bg-picker-menu-title">${title}</div>
+      ${customKind ? customColourHtml(customKind, current.key === "custom") : ""}
       ${allOptions.map(o => `
         <button class="bg-swatch-option ${current.key === o.key ? "active" : ""}" data-action="${action}" data-${dataKey}="${o.key}">
           <span class="bg-swatch-dot" style="background:${o.swatch}"></span>
           <span class="bg-swatch-label">${o.label}</span>
         </button>
       `).join("")}
-      ${customKind ? customColourHtml(customKind) : ""}
     `;
   }
 }
 
-function customColourHtml(kind) {
+function customColourHtml(kind, isActive = false) {
   const hex = loadCustomHex(kind);
   return `
-    <div class="custom-colour">
+    <div class="custom-colour ${isActive ? "active" : ""}">
       <div class="custom-colour-title">Custom colour</div>
       <div class="custom-colour-row">
         <input type="color" class="custom-colour-picker" data-action="set-custom-colour" data-kind="${kind}" value="${hex}">

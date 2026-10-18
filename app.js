@@ -1123,19 +1123,14 @@ function searchResultCard(item) {
   const inBuy  = isInBuyList(item.id);
   const inSell = isInSellList(item.id);
 
-  const entry = loadPriceHistory()[item.id];
-  const pcCoins = (entry?.pricechecks ?? []).filter(p => p.currency === 1).map(p => p.price);
-  const communityCoins = (entry?.supabasePrices ?? []).flatMap(p => [p.min, p.max]).filter(v => v > 0);
-  const approvedLogCoins = (entry?.approvedLogPrices ?? []).filter(v => v > 0);
-  // Logged prices (user checks + approved community logs). The Supabase min/max only takes over once there are enough logs to trust it.
-  const logCoins = [...pcCoins, ...approvedLogCoins];
-  const allCoins = logCoins.length > SEARCH_RANGE_MIN_LOGS
-    ? [...logCoins, ...communityCoins]
-    : logCoins;
+  // Min/max come straight from the Supabase prices row (latest aggregate, stored by the search price fetch)
+  const latest = (loadPriceHistory()[item.id]?.supabasePrices ?? []).at(-1);
+  const lo = latest?.min > 0 ? latest.min : null;
+  const hi = latest?.max > 0 ? latest.max : null;
   let priceRange = "";
-  if (allCoins.length) {
-    const lo = Math.min(...allCoins), hi = Math.max(...allCoins);
-    priceRange = `<div class="search-tile-price">${COIN_ICON} ${lo === hi ? formatCoins(lo) : `${formatCoins(lo)} – ${formatCoins(hi)}`}</div>`;
+  if (lo != null || hi != null) {
+    const a = lo ?? hi, b = hi ?? lo;
+    priceRange = `<div class="search-tile-price">${COIN_ICON} ${a === b ? formatCoins(a) : `${formatCoins(a)} – ${formatCoins(b)}`}</div>`;
   }
 
   const statusPill = item.activeInStore
@@ -2214,23 +2209,35 @@ async function doSearch(query, page = 1) {
     renderSearchCards(resultsEl, items);
     renderSearchPagination();
 
-    // Refresh prices for visible items from Supabase in the background
+    // Refresh Supabase aggregates and approved price logs for visible items in the background
     const pageIds = items.map(i => String(i.id));
-    fetchSupabasePrices(pageIds).then(prices => {
-      if (!Object.keys(prices).length) return;
+    Promise.all([
+      fetchSupabasePrices(pageIds),
+      Promise.all(pageIds.map(async id => ({ id, logs: await fetchApprovedPriceLogs(id) }))),
+    ]).then(([prices, logResults]) => {
       const history = loadPriceHistory();
       const today = new Date().toISOString().split("T")[0];
       let changed = false;
+      const ensureEntry = (idStr) => {
+        if (history[idStr]) return true;
+        const item = searchResultsMap[Number(idStr)];
+        if (!item) return false;
+        history[idStr] = { id: Number(idStr), name: item.name, pricechecks: [], supabasePrices: [] };
+        changed = true;
+        return true;
+      };
       for (const [idStr, p] of Object.entries(prices)) {
-        if (!history[idStr]) {
-          const item = searchResultsMap[Number(idStr)];
-          if (!item) continue;
-          history[idStr] = { id: Number(idStr), name: item.name, pricechecks: [], supabasePrices: [] };
-          changed = true;
-        }
+        if (!ensureEntry(idStr)) continue;
         const prev = (history[idStr].supabasePrices ?? []).at(-1);
         if (prev?.min === p.min && prev?.max === p.max) continue;
         history[idStr].supabasePrices = [...(history[idStr].supabasePrices ?? []), { min: p.min, max: p.max, date: today }];
+        changed = true;
+      }
+      for (const { id, logs } of logResults) {
+        if (!logs.length || !ensureEntry(id)) continue;
+        const logPrices = logs.map(l => l.price);
+        if (JSON.stringify(history[id].approvedLogPrices) === JSON.stringify(logPrices)) continue;
+        history[id].approvedLogPrices = logPrices;
         changed = true;
       }
       if (changed) {
